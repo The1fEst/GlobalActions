@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Models\" />
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
+        <PackageReference Include="Avalonia.Win32" Version="0.10.0" />
+        <PackageReference Include="Avalonia.X11" Version="0.10.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="NodeSystem\Nodes\KeyboardNodeViewModel.cs">
+        <DependentUpon>KeyboardNode.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="NodeSystem\ScriptEditorViewModel.cs">
+        <DependentUpon>ScriptEditor.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\TextNode.axaml.cs">
+        <DependentUpon>TextNode.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\MouseNode.axaml.cs">
+        <DependentUpon>MouseNode.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\TextNodeViewModel.cs">
+        <DependentUpon>TextNode.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\MouseNodeViewModel.cs">
+        <DependentUpon>MouseNode.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\RepeatNode.axaml.cs">
+        <DependentUpon>RepeatNode.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />
+    </ItemGroup>
+</Project>

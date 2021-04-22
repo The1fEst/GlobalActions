@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:v="clr-namespace:GlobalActions.GUI.NodeSystem"
+             xmlns:nodes="clr-namespace:GlobalActions.GUI.NodeSystem.Nodes"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GlobalActions.GUI.NodeSystem.ScriptEditor">
+
+    <Design.DataContext>
+        <v:ScriptEditorViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="50,*">
+
+        <StackPanel Grid.Row="0">
+
+            <TextBlock />
+            <ComboBox Items="{Binding AvailableModes}"
+                      SelectedItem="{Binding Mode}" />
+
+        </StackPanel>
+
+        <SplitView Grid.Row="1"
+                   OpenPaneLength="300"
+                   IsPaneOpen="True"
+                   DisplayMode="Inline">
+
+            <SplitView.Pane>
+                <Grid RowDefinitions="*,50">
+
+                    <ListBox Grid.Row="0"
+                             Items="{Binding AvailableNodes}"
+                             SelectedItem="{Binding SelectedNode}" />
+
+                    <Button Grid.Row="1" 
+                            Content="Append selected node"
+                            Click="AppendNode" />
+
+                </Grid>
+            </SplitView.Pane>
+
+            <ListBox Items="{Binding Nodes}" />
+
+        </SplitView>
+
+    </Grid>
+
+</UserControl>
