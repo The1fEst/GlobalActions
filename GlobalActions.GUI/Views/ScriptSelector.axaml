@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:nodeSystem="clr-namespace:GlobalActions.GUI.NodeSystem"
+             xmlns:v="clr-namespace:GlobalActions.GUI.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GlobalActions.GUI.Views.ScriptSelector">
+
+    <Design.DataContext>
+        <v:ScriptSelectorViewModel />
+    </Design.DataContext>
+
+
+    <Grid ColumnDefinitions="300,*">
+
+        <Grid Grid.Column="0"
+              RowDefinitions="*,50">
+            <ListBox Grid.Row="0"
+                     Classes="UIListBox"
+                     Margin="0,10"
+                     DoubleTapped="LoadScript"
+                     Items="{Binding Scripts}"
+                     SelectedItem="{Binding SelectedScript}" />
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="60,*"
+                  Margin="10"
+                  VerticalAlignment="Center">
+                <Button Grid.Column="0"
+                        Content="Add"
+                        Click="Add" />
+
+                <TextBox Grid.Column="1"
+                         Height="30"
+                         Text="{Binding Name}" />
+            </Grid>
+        </Grid>
+
+        <nodeSystem:ScriptEditor Grid.Column="1"
+                                 Margin="20,0"
+                                 Name="ScriptEditor" />
+
+    </Grid>
+
+</UserControl>

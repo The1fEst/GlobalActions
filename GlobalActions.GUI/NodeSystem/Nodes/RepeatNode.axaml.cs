@@ -32,5 +32,9 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
         public Node ToNode() {
             throw new System.NotImplementedException();
         }
+
+        public INodeSave ToSave() {
+            throw new System.NotImplementedException();
+        }
     }
 }

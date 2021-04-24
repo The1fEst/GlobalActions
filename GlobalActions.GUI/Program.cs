@@ -4,6 +4,8 @@ using GlobalActions.GUI.NodeSystem.Nodes;
 
 namespace GlobalActions.GUI {
     internal class Program {
+        public const string ScriptsDirectory = "Scripts";
+
         public static void Main(string[] args) {
             try {
                 BuildAvaloniaApp()

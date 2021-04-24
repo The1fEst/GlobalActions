@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Collections;
 using GlobalActions.GUI.NodeSystem.Nodes;
@@ -58,5 +59,38 @@ namespace GlobalActions.GUI.NodeSystem {
             get => _nodes;
             set => this.RaiseAndSetIfChanged(ref _nodes, value);
         }
+
+        public ScriptSave ToSave() {
+            return new(Nodes
+                    .Select(node => node.ToSave())
+                    .ToArray(),
+                Key,
+                Mode,
+                Name);
+        }
+
+        public static ScriptEditorViewModel FromSave(ScriptSave script) {
+            return new() {
+                Key = script.Key,
+                Mode = script.Mode,
+                Name = script.Name,
+                Nodes = new(script.Nodes.Select(node => node.FromSave()))
+            };
+        }
+    }
+
+    [Serializable]
+    public class ScriptSave {
+        public ScriptSave(INodeSave[] nodes, Keys key, ScriptMode mode, string name) {
+            Nodes = nodes;
+            Key = key;
+            Mode = mode;
+            Name = name;
+        }
+
+        public INodeSave[] Nodes { get; set; }
+        public Keys Key { get; set; }
+        public ScriptMode Mode { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using GlobalActions.Models;
 using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
+    [Serializable]
     public class KeyboardNode : UserControl, INode {
         private readonly KeyboardNodeViewModel _vm;
 
@@ -48,6 +49,15 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
             };
         }
 
+        public INodeSave ToSave() {
+            return new KeyboardNodeSave {
+                DelayAfter = _vm.DelayAfter,
+                DelayBefore = _vm.DelayBefore,
+                HotKey = _vm.HotKey,
+                HotKeys = _vm.HotKeys.ToArray()
+            };
+        }
+
         private void OnGotFocus(object? sender, GotFocusEventArgs e) {
             InterceptKeys.Run();
             _vm.HotKeys = new();
@@ -66,22 +76,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
         private void OnLostFocus(object? sender, RoutedEventArgs e) {
             InterceptKeys.Stop();
             InterceptKeys.KeyDown = null;
-        }
-
-        private void Button_OnClick(object? sender, RoutedEventArgs e) {
-            var script = new Script("1") {
-                Mode = ScriptMode.Single,
-                HotKey = new() {
-                    Key = 113
-                },
-                IsActive = true,
-                NodePipe = new() {new Node {
-                    Action = new KeyboardAction {
-                        Keys = _vm.HotKeys.ToList()
-                    }
-                }}
-            };
-            script.Toggle();
         }
     }
 }

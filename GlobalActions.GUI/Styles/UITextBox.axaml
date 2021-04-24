@@ -1,0 +1,27 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <TextBox Classes="UITextBox" />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBox.UITextBox">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="BorderThickness" Value="{StaticResource UiBottomBorder}" />
+        <Setter Property="BorderBrush" Value="{StaticResource UiColorTransparent}" />
+        <Setter Property="Background" Value="{StaticResource UiTransparent}" />
+    </Style>
+
+    <Style Selector="TextBox:focus.UITextBox /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource TextControlBackground}" />
+        <Setter Property="BorderThickness" Value="{StaticResource UiBottomBorder}" />
+        <Setter Property="BorderBrush" Value="{StaticResource UiColor}" />
+    </Style>
+
+    <Style Selector="TextBox:pointerover.UITextBox /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource UiTransparentDark}" />
+        <Setter Property="BorderThickness" Value="{StaticResource UiBottomBorder}" />
+        <Setter Property="BorderBrush" Value="{StaticResource UiColor}" />
+    </Style>
+</Styles>

@@ -1,0 +1,29 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <ListBox Classes="MainListBox">
+                <ListBoxItem Content="1" />
+                <ListBoxItem Content="2" />
+                <ListBoxItem Content="3" />
+                <ListBoxItem Content="4" />
+                <ListBoxItem Content="5" />
+            </ListBox>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="ListBox.MainListBox > ListBoxItem">
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="BorderThickness" Value="{StaticResource UiBottomBorder}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style Selector="ListBox.MainListBox > ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="BorderBrush" Value="{StaticResource UiColorTransparent}" />
+    </Style>
+
+    <Style Selector="ListBox.MainListBox > ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="BorderBrush" Value="{StaticResource UiColor}" />
+        <Setter Property="Background" Value="{StaticResource UiTransparent}" />
+    </Style>
+</Styles>

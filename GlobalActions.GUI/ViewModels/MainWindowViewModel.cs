@@ -1,5 +1,8 @@
-﻿namespace GlobalActions.GUI.ViewModels {
-    public class MainWindowViewModel : ViewModelBase {
-        public string Greeting => "Welcome to Avalonia!";
+﻿using Avalonia.Collections;
+using ReactiveUI;
+
+namespace GlobalActions.GUI.ViewModels {
+    public class MainWindowViewModel : ReactiveObject {
+        
     }
 }

@@ -4,25 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:nodeSystem="clr-namespace:GlobalActions.GUI.NodeSystem"
+        xmlns:views="clr-namespace:GlobalActions.GUI.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GlobalActions.GUI.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="GlobalActions.GUI">
+        Title="GlobalActions.GUI"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <SplitView IsPaneOpen="True"
-               DisplayMode="Inline"
-               OpenPaneLength="300">
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
 
-        <SplitView.Pane>
-            <ListBox />
-        </SplitView.Pane>
-
-        <nodeSystem:ScriptEditor />
-
-    </SplitView>
+        <views:ScriptSelector />
+    </Panel>
 
 </Window>

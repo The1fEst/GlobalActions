@@ -8,5 +8,10 @@
 
     <Application.Styles>
         <FluentTheme Mode="Dark" />
+        <StyleInclude Source="avares://GlobalActions.GUI/Styles/Resources.axaml" />
+        <StyleInclude Source="avares://GlobalActions.GUI/Styles/MainListBox.axaml" />
+        <StyleInclude Source="avares://GlobalActions.GUI/Styles/UIButton.axaml" />
+        <StyleInclude Source="avares://GlobalActions.GUI/Styles/UIListBox.axaml" />
+        <StyleInclude Source="avares://GlobalActions.GUI/Styles/UITextBox.axaml" />
     </Application.Styles>
 </Application>

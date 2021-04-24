@@ -1,0 +1,17 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Styles.Resources>
+        <SolidColorBrush x:Key="UiColor">#1b6fcf</SolidColorBrush>
+        <SolidColorBrush x:Key="UiColorTransparent">#771b6fcf</SolidColorBrush>
+        <SolidColorBrush x:Key="UiDark">#77262626</SolidColorBrush>
+        <SolidColorBrush x:Key="UiTransparent">#22ffffff</SolidColorBrush>
+        <SolidColorBrush x:Key="UiTransparentDark">#22000000</SolidColorBrush>
+        <Thickness x:Key="UiBottomBorder">0,0,0,3</Thickness>
+        <Thickness x:Key="UiLeftBorder">3,0,0,0</Thickness>
+    </Styles.Resources>
+    
+    <Style Selector="ListBox">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+</Styles>
