@@ -12,12 +12,12 @@
     </Design.DataContext>
 
     <Grid RowDefinitions="*,*,*,*,*">
-        
+
         <TextBlock Grid.Row="0"
                    TextAlignment="Center">
             Keyboard
         </TextBlock>
-        
+
         <c:NamedField Grid.Row="1"
                       LabelWidth="100"
                       Label="Delay before">
@@ -32,9 +32,9 @@
         <c:NamedField Grid.Row="3"
                       Label="Input type">
             <ComboBox Items="{Binding InputTypes}"
-                      SelectedItem="{Binding InputType}"/>
+                      SelectedItem="{Binding InputType}" />
         </c:NamedField>
-        
+
         <c:NamedField Grid.Row="4"
                       Label="HotKey">
             <TextBox Name="HotKey"

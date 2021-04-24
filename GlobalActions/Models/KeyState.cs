@@ -2,48 +2,56 @@ using System.Linq;
 using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models {
-    public class KeyState {
-        private readonly int[] _modifiers;
+	public class KeyState {
+		private readonly int[] _modifiers;
 
-        public KeyState(int key, params int[] modifiers) {
-            _modifiers = modifiers;
-            Key = key;
-        }
+		public KeyState(int key, params int[] modifiers) {
+			_modifiers = modifiers;
+			Key = key;
+		}
 
-        private int Key { get; }
-        private bool State { get; set; }
+		private int Key { get; }
 
-        public bool IsDown => GetState() == KeyStates.Down;
+		private bool State { get; set; }
 
-        private KeyStates GetKeyState(int key) {
-            if (key == 0) return KeyStates.None;
+		public bool IsDown => GetState() == KeyStates.Down;
 
-            var state = GetAsyncKeyState(key);
-            var down = state == -32767;
-            var hold = state == -32768;
-            var release = state == 0;
+		private KeyStates GetKeyState(int key) {
+			if (key == 0) {
+				return KeyStates.None;
+			}
 
-            if ((down || hold) && !State) {
-                State = true;
-                return KeyStates.Down;
-            }
+			var state = GetAsyncKeyState(key);
+			var down = state == -32767;
+			var hold = state == -32768;
+			var release = state == 0;
 
-            if ((hold || down) && State) return KeyStates.Hold;
+			if ((down || hold) && !State) {
+				State = true;
+				return KeyStates.Down;
+			}
 
-            if (!release || !State) return KeyStates.None;
+			if ((hold || down) && State) {
+				return KeyStates.Hold;
+			}
 
-            State = false;
-            return KeyStates.Release;
-        }
+			if (!release || !State) {
+				return KeyStates.None;
+			}
 
-        public KeyStates GetState() {
-            var keyState = GetKeyState(Key);
-            var modifiersState = _modifiers.Select(GetKeyState).ToList();
+			State = false;
+			return KeyStates.Release;
+		}
 
-            if (!modifiersState.Any() || modifiersState.All(x => x is KeyStates.Down or KeyStates.Hold))
-                return keyState;
+		public KeyStates GetState() {
+			var keyState = GetKeyState(Key);
+			var modifiersState = _modifiers.Select(GetKeyState).ToList();
 
-            return KeyStates.None;
-        }
-    }
+			if (!modifiersState.Any() || modifiersState.All(x => x is KeyStates.Down or KeyStates.Hold)) {
+				return keyState;
+			}
+
+			return KeyStates.None;
+		}
+	}
 }

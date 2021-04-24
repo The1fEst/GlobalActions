@@ -2,26 +2,26 @@ using Avalonia.Collections;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.Views {
-    public class ScriptSelectorViewModel : ReactiveObject{
-        private AvaloniaList<string> _scripts;
+	public class ScriptSelectorViewModel : ReactiveObject {
+		private string _name;
 
-        public AvaloniaList<string> Scripts {
-            get => _scripts;
-            set => this.RaiseAndSetIfChanged(ref _scripts, value);
-        }
+		private AvaloniaList<string> _scripts;
 
-        private string _name;
+		private string _selectedScript;
 
-        public string Name {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
+		public AvaloniaList<string> Scripts {
+			get => _scripts;
+			set => this.RaiseAndSetIfChanged(ref _scripts, value);
+		}
 
-        private string _selectedScript;
+		public string Name {
+			get => _name;
+			set => this.RaiseAndSetIfChanged(ref _name, value);
+		}
 
-        public string SelectedScript {
-            get => _selectedScript;
-            set => this.RaiseAndSetIfChanged(ref _selectedScript, value);
-        }
-    }
+		public string SelectedScript {
+			get => _selectedScript;
+			set => this.RaiseAndSetIfChanged(ref _selectedScript, value);
+		}
+	}
 }

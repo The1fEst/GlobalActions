@@ -4,28 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlobalActions.Models.ScriptRunners {
-    public class ToggleMultiplyRunner : IRunner {
-        public bool RunnerState { get; set; }
+	public class ToggleMultiplyRunner : IRunner {
+		public bool RunnerState { get; set; }
 
-        public void Run(List<Node> nodePipe) {
-            foreach (var node in nodePipe.TakeWhile(_ => !RunnerState)) node.Action.RunAction();
-        }
+		public void Run(List<Node> nodePipe) {
+			foreach (var node in nodePipe.TakeWhile(_ => !RunnerState)) {
+				node.Action.RunAction();
+			}
+		}
 
-        public void Stop() {
-            RunnerState = false;
-        }
+		public void Stop() {
+			RunnerState = false;
+		}
 
-        public void Toggle(List<Node> nodePipe, HotKey hotKey) {
-            RunnerState = !RunnerState;
+		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+			RunnerState = !RunnerState;
 
-            Task.Run(() => {
-                while (RunnerState) {
-                    Console.WriteLine("here");
-                    Run(nodePipe);
-                }
+			Task.Run(() => {
+				while (RunnerState) {
+					Console.WriteLine("here");
+					Run(nodePipe);
+				}
 
-                Stop();
-            });
-        }
-    }
+				Stop();
+			});
+		}
+	}
 }

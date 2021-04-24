@@ -4,41 +4,42 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlobalActions.Models.ScriptRunners {
-    public class HoldMultiplyRunner : IRunner {
-        public bool RunnerState { get; set; }
+	public class HoldMultiplyRunner : IRunner {
+		public bool RunnerState { get; set; }
 
-        public void Run(List<Node> nodePipe) {
-            foreach (var node in nodePipe) {
-                if (!RunnerState) {
-                    return;
-                }
-                node.Action.RunAction();
-            }
-        }
+		public void Run(List<Node> nodePipe) {
+			foreach (var node in nodePipe) {
+				if (!RunnerState) {
+					return;
+				}
 
-        public void Stop() {
-            RunnerState = false;
-        }
+				node.Action.RunAction();
+			}
+		}
 
-        public void Toggle(List<Node> nodePipe, HotKey hotKey) {
-            var keyState = new KeyState(hotKey.Key, hotKey.Modifiers.ToArray());
-            var state = keyState.GetState();
+		public void Stop() {
+			RunnerState = false;
+		}
 
-            RunnerState = !RunnerState;
+		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+			var keyState = new KeyState(hotKey.Key, hotKey.Modifiers.ToArray());
+			var state = keyState.GetState();
 
-            Task.Run(() => {
-                while (RunnerState) {
-                    if (state is KeyStates.Hold or KeyStates.Down) {
-                        Console.WriteLine("here");
-                        Run(nodePipe);
-                    }
-                    else {
-                        Stop();
-                    }
+			RunnerState = !RunnerState;
 
-                    state = keyState.GetState();
-                }
-            });
-        }
-    }
+			Task.Run(() => {
+				while (RunnerState) {
+					if (state is KeyStates.Hold or KeyStates.Down) {
+						Console.WriteLine("here");
+						Run(nodePipe);
+					}
+					else {
+						Stop();
+					}
+
+					state = keyState.GetState();
+				}
+			});
+		}
+	}
 }

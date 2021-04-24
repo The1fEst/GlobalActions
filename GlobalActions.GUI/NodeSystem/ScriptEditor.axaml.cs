@@ -4,79 +4,82 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using GlobalActions.GUI.NodeSystem.Nodes;
+using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem {
-    public class ScriptEditor : UserControl {
-        private ScriptEditorViewModel _vm;
+	public class ScriptEditor : UserControl {
+		private ScriptEditorViewModel _vm;
 
-        public void LoadFromFile(string name) {
-            if (!Directory.Exists(Program.ScriptsDirectory)) {
-                Directory.CreateDirectory(Program.ScriptsDirectory);
-                
-                DataContext = _vm = new() {
-                    Name = name
-                };
-                
-                return;
-            }
+		public ScriptEditor() {
+			DataContext = _vm = new ScriptEditorViewModel();
 
-            var filePath = Path.Combine(Program.ScriptsDirectory, name);
-            if (!File.Exists(filePath)) {
-                DataContext = _vm = new() {
-                    Name = name
-                };
-                
-                return;
-            }
+			InitializeComponent();
+		}
 
-            var data = File.ReadAllBytes(filePath);
-            var script = data.Deserializer<ScriptSave>();
+		public void LoadFromFile(string name) {
+			if (!Directory.Exists(Program.ScriptsDirectory)) {
+				Directory.CreateDirectory(Program.ScriptsDirectory);
 
-            DataContext = _vm = ScriptEditorViewModel.FromSave(script);
-        }
+				DataContext = _vm = new ScriptEditorViewModel {
+					Name = name,
+				};
 
-        public ScriptEditor() {
-            DataContext = _vm = new();
+				return;
+			}
 
-            InitializeComponent();
-        }
+			var filePath = Path.Combine(Program.ScriptsDirectory, name);
+			if (!File.Exists(filePath)) {
+				DataContext = _vm = new ScriptEditorViewModel {
+					Name = name,
+				};
 
-        private void InitializeComponent() {
-            AvaloniaXamlLoader.Load(this);
-        }
+				return;
+			}
+
+			var data = File.ReadAllBytes(filePath);
+			var script = data.Deserializer<ScriptSave>();
+
+			DataContext = _vm = ScriptEditorViewModel.FromSave(script);
+		}
+
+		private void InitializeComponent() {
+			AvaloniaXamlLoader.Load(this);
+		}
 
 
-        private void AppendNode(object? sender, RoutedEventArgs e) {
-            if (_vm.SelectedNode != null) _vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
-        }
+		private void AppendNode(object? sender, RoutedEventArgs e) {
+			if (_vm.SelectedNode != null) {
+				_vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
+			}
+		}
 
-        private void Save(object? sender, RoutedEventArgs e) {
-            var scriptsList = ScriptsList.Instance;
+		private void Save(object? sender, RoutedEventArgs e) {
+			var scriptsList = ScriptsList.Instance;
 
-            scriptsList.Add(_vm.Name);
-            scriptsList.Edit(_vm.Name, script => {
-                script.Mode = _vm.Mode;
-                script.HotKey = new() {Key = (int) _vm.Key};
-                script.IsActive = true;
-                script.NodePipe = _vm.Nodes.Select(node => node.ToNode()).ToList();
-            });
+			scriptsList.Add(_vm.Name);
+			scriptsList.Edit(_vm.Name, script => {
+				script.Mode = _vm.Mode;
+				script.HotKey = new HotKey {Key = (int) _vm.Key};
+				script.IsActive = true;
+				script.NodePipe = _vm.Nodes.Select(node => node.ToNode()).ToList();
+			});
 
-            SaveToFile(_vm.Name);
-        }
+			SaveToFile(_vm.Name);
+		}
 
-        private void SaveToFile(string name) {
-            if (!Directory.Exists(Program.ScriptsDirectory)) {
-                Directory.CreateDirectory(Program.ScriptsDirectory);
-            }
+		private void SaveToFile(string name) {
+			if (!Directory.Exists(Program.ScriptsDirectory)) {
+				Directory.CreateDirectory(Program.ScriptsDirectory);
+			}
 
-            var filePath = Path.Combine(Program.ScriptsDirectory, name);
-            if (!File.Exists(filePath)) {
-                File.Create(filePath).Dispose();
-            }
+			var filePath = Path.Combine(Program.ScriptsDirectory, name);
+			if (!File.Exists(filePath)) {
+				File.Create(filePath).Dispose();
+			}
 
-            var data = _vm.ToSave().Serialize();
+			var data = _vm.ToSave().Serialize();
 
-            File.WriteAllBytes(filePath, data);
-        }
-    }
+			File.WriteAllBytes(filePath, data);
+		}
+	}
 }

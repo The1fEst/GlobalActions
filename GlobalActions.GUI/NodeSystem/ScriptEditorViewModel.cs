@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Collections;
 using GlobalActions.GUI.NodeSystem.Nodes;
@@ -7,90 +6,93 @@ using GlobalActions.Models;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem {
-    public class ScriptEditorViewModel : ReactiveObject {
-        private ScriptMode _mode;
+	public class ScriptEditorViewModel : ReactiveObject {
+		private Keys _key;
 
-        private AvaloniaList<INode> _nodes = new();
+		private ScriptMode _mode;
 
-        private INode? _selectedNode;
+		private string _name;
 
-        private string _name;
+		private AvaloniaList<INode> _nodes = new();
 
-        public string Name {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
+		private INode? _selectedNode;
 
-        public AvaloniaList<Keys> AvailableKeys =>
-            new(Enum.GetValues(typeof(Keys)).Cast<Keys>());
+		public string Name {
+			get => _name;
+			set => this.RaiseAndSetIfChanged(ref _name, value);
+		}
 
-        public AvaloniaList<ScriptMode> AvailableModes =>
-            new(Enum.GetValues(typeof(ScriptMode)).Cast<ScriptMode>());
+		public AvaloniaList<Keys> AvailableKeys =>
+			new(Enum.GetValues(typeof(Keys)).Cast<Keys>());
 
-        public ScriptMode Mode {
-            get => _mode;
-            set => this.RaiseAndSetIfChanged(ref _mode, value);
-        }
+		public AvaloniaList<ScriptMode> AvailableModes =>
+			new(Enum.GetValues(typeof(ScriptMode)).Cast<ScriptMode>());
 
-        private Keys _key;
+		public ScriptMode Mode {
+			get => _mode;
+			set => this.RaiseAndSetIfChanged(ref _mode, value);
+		}
 
-        public Keys Key {
-            get => _key;
-            set => this.RaiseAndSetIfChanged(ref _key, value);
-        }
+		public Keys Key {
+			get => _key;
+			set => this.RaiseAndSetIfChanged(ref _key, value);
+		}
 
-        public AvaloniaList<INode> AvailableNodes {
-            get {
-                var type = typeof(INode);
-                var list = new AvaloniaList<INode>(AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(s => s.GetTypes())
-                    .Where(p => type.IsAssignableFrom(p) && p.IsClass)
-                    .Select(x => (INode) Activator.CreateInstance(x)!));
-                return list;
-            }
-        }
+		public AvaloniaList<INode> AvailableNodes {
+			get {
+				var type = typeof(INode);
+				var list = new AvaloniaList<INode>(AppDomain.CurrentDomain.GetAssemblies()
+					.SelectMany(s => s.GetTypes())
+					.Where(p => type.IsAssignableFrom(p) && p.IsClass)
+					.Select(x => (INode) Activator.CreateInstance(x)!));
+				return list;
+			}
+		}
 
-        public INode? SelectedNode {
-            get => _selectedNode;
-            set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
-        }
+		public INode? SelectedNode {
+			get => _selectedNode;
+			set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
+		}
 
-        public AvaloniaList<INode> Nodes {
-            get => _nodes;
-            set => this.RaiseAndSetIfChanged(ref _nodes, value);
-        }
+		public AvaloniaList<INode> Nodes {
+			get => _nodes;
+			set => this.RaiseAndSetIfChanged(ref _nodes, value);
+		}
 
-        public ScriptSave ToSave() {
-            return new(Nodes
-                    .Select(node => node.ToSave())
-                    .ToArray(),
-                Key,
-                Mode,
-                Name);
-        }
+		public ScriptSave ToSave() {
+			return new(Nodes
+					.Select(node => node.ToSave())
+					.ToArray(),
+				Key,
+				Mode,
+				Name);
+		}
 
-        public static ScriptEditorViewModel FromSave(ScriptSave script) {
-            return new() {
-                Key = script.Key,
-                Mode = script.Mode,
-                Name = script.Name,
-                Nodes = new(script.Nodes.Select(node => node.FromSave()))
-            };
-        }
-    }
+		public static ScriptEditorViewModel FromSave(ScriptSave script) {
+			return new() {
+				Key = script.Key,
+				Mode = script.Mode,
+				Name = script.Name,
+				Nodes = new AvaloniaList<INode>(script.Nodes.Select(node => node.FromSave())),
+			};
+		}
+	}
 
-    [Serializable]
-    public class ScriptSave {
-        public ScriptSave(INodeSave[] nodes, Keys key, ScriptMode mode, string name) {
-            Nodes = nodes;
-            Key = key;
-            Mode = mode;
-            Name = name;
-        }
+	[Serializable]
+	public class ScriptSave {
+		public ScriptSave(INodeSave[] nodes, Keys key, ScriptMode mode, string name) {
+			Nodes = nodes;
+			Key = key;
+			Mode = mode;
+			Name = name;
+		}
 
-        public INodeSave[] Nodes { get; set; }
-        public Keys Key { get; set; }
-        public ScriptMode Mode { get; set; }
-        public string Name { get; set; }
-    }
+		public INodeSave[] Nodes { get; set; }
+
+		public Keys Key { get; set; }
+
+		public ScriptMode Mode { get; set; }
+
+		public string Name { get; set; }
+	}
 }

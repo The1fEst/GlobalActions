@@ -4,62 +4,66 @@ using System.Linq;
 using GlobalActions.Models;
 
 namespace GlobalActions {
-    public class ScriptsList {
-        private static ScriptsList? _instance;
-        public static ScriptsList Instance => _instance ??= new ScriptsList();
+	public class ScriptsList {
+		private static ScriptsList? _instance;
 
-        private ScriptsList() {
-        }
+		private readonly List<Script> _scripts = new();
 
-        private readonly List<Script> _scripts = new();
+		private ScriptsList() { }
 
-        public void Add(string name) {
-            var script = _scripts.FirstOrDefault(x => x.Name == name)
-                         ?? new Script(name) {
-                             Id = _scripts.Count + 1
-                         };
+		public static ScriptsList Instance => _instance ??= new ScriptsList();
 
-            _scripts.Add(script);
-        }
+		public void Add(string name) {
+			var script = _scripts.FirstOrDefault(x => x.Name == name)
+			             ?? new Script(name) {
+				             Id = _scripts.Count + 1,
+			             };
 
-        public void Remove(string name) {
-            var script = GetScriptByName(name);
+			_scripts.Add(script);
+		}
 
-            _scripts.Remove(script);
-        }
+		public void Remove(string name) {
+			var script = GetScriptByName(name);
 
-        public bool ToggleActive(string name) {
-            var script = GetScriptByName(name);
+			_scripts.Remove(script);
+		}
 
-            script.IsActive = !script.IsActive;
+		public bool ToggleActive(string name) {
+			var script = GetScriptByName(name);
 
-            return script.IsActive;
-        }
+			script.IsActive = !script.IsActive;
 
-        public void Toggle(int id) {
-            var script = GetScriptById(id);
-            script.Toggle();
-        }
+			return script.IsActive;
+		}
 
-        public void Edit(string name, Action<Script> edit) {
-            var script = GetScriptByName(name);
-            edit(script);
-        }
+		public void Toggle(int id) {
+			var script = GetScriptById(id);
+			script.Toggle();
+		}
 
-        private Script GetScriptByName(string name) {
-            var script = _scripts.FirstOrDefault(x => x.Name == name);
+		public void Edit(string name, Action<Script> edit) {
+			var script = GetScriptByName(name);
+			edit(script);
+		}
 
-            if (script == null) throw new Exception();
+		private Script GetScriptByName(string name) {
+			var script = _scripts.FirstOrDefault(x => x.Name == name);
 
-            return script;
-        }
+			if (script == null) {
+				throw new Exception();
+			}
 
-        private Script GetScriptById(int id) {
-            var script = _scripts.FirstOrDefault(x => x.Id == id);
+			return script;
+		}
 
-            if (script == null) throw new Exception();
+		private Script GetScriptById(int id) {
+			var script = _scripts.FirstOrDefault(x => x.Id == id);
 
-            return script;
-        }
-    }
+			if (script == null) {
+				throw new Exception();
+			}
+
+			return script;
+		}
+	}
 }

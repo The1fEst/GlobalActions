@@ -1,47 +1,49 @@
 using System.IO;
 using System.Linq;
-using Avalonia;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using GlobalActions.GUI.NodeSystem;
 
 namespace GlobalActions.GUI.Views {
-    public class ScriptSelector : UserControl {
-        private readonly ScriptSelectorViewModel _vm;
-        
-        public ScriptSelector() {
-            DataContext = _vm = new();
-            
-            InitializeComponent();
-        }
+	public class ScriptSelector : UserControl {
+		private readonly ScriptSelectorViewModel _vm;
 
-        private void InitializeComponent() {
-            AvaloniaXamlLoader.Load(this);
-            LoadScripts();
-        }
-        
-        private void Add(object? sender, RoutedEventArgs e) {
-            if (string.IsNullOrEmpty(_vm.Name)) return;
-            
-            _vm.Scripts.Add(_vm.Name);
-        }
+		public ScriptSelector() {
+			DataContext = _vm = new ScriptSelectorViewModel();
 
-        private void LoadScripts() {
-            if (!Directory.Exists(Program.ScriptsDirectory)) {
-                Directory.CreateDirectory(Program.ScriptsDirectory);
-                return;
-            }
+			InitializeComponent();
+		}
 
-            var files = Directory.GetFiles(Program.ScriptsDirectory)
-                .Select(file => Path.GetFileName(file)!)
-                .ToArray();
+		private void InitializeComponent() {
+			AvaloniaXamlLoader.Load(this);
+			LoadScripts();
+		}
 
-            _vm.Scripts = new(files);
-        }
+		private void Add(object? sender, RoutedEventArgs e) {
+			if (string.IsNullOrEmpty(_vm.Name)) {
+				return;
+			}
 
-        private void LoadScript(object? sender, RoutedEventArgs e) {
-            this.FindControl<ScriptEditor>("ScriptEditor").LoadFromFile(_vm.SelectedScript);
-        }
-    }
+			_vm.Scripts.Add(_vm.Name);
+		}
+
+		private void LoadScripts() {
+			if (!Directory.Exists(Program.ScriptsDirectory)) {
+				Directory.CreateDirectory(Program.ScriptsDirectory);
+				return;
+			}
+
+			var files = Directory.GetFiles(Program.ScriptsDirectory)
+				.Select(file => Path.GetFileName(file)!)
+				.ToArray();
+
+			_vm.Scripts = new AvaloniaList<string>(files);
+		}
+
+		private void LoadScript(object? sender, RoutedEventArgs e) {
+			this.FindControl<ScriptEditor>("ScriptEditor").LoadFromFile(_vm.SelectedScript);
+		}
+	}
 }

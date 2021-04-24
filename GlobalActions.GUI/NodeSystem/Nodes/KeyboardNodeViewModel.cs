@@ -1,47 +1,47 @@
 using System;
 using System.Linq;
 using Avalonia.Collections;
-using Avalonia.Input;
 using GlobalActions.Models;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
-    public class KeyboardNodeViewModel : ReactiveObject {
-        private int _delayAfter;
-        private int _delayBefore;
+	public class KeyboardNodeViewModel : ReactiveObject {
+		private int _delayAfter;
 
-        public KeyboardNodeViewModel() {
-            _delayAfter = 0;
-            _delayBefore = 0;
-        }
+		private int _delayBefore;
 
-        public int DelayBefore {
-            get => _delayBefore;
-            set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
-        }
+		private string _hotKey;
 
-        public int DelayAfter {
-            get => _delayAfter;
-            set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
-        }
+		private InputType _inputType;
 
-        public AvaloniaList<byte> HotKeys;
+		public AvaloniaList<byte> HotKeys;
 
-        private string _hotKey;
+		public KeyboardNodeViewModel() {
+			_delayAfter = 0;
+			_delayBefore = 0;
+		}
 
-        public string HotKey {
-            get => _hotKey;
-            set => this.RaiseAndSetIfChanged(ref _hotKey, value);
-        }
-        
-        public AvaloniaList<InputType> InputTypes =>
-            new(Enum.GetValues(typeof(InputType)).Cast<InputType>());
+		public int DelayBefore {
+			get => _delayBefore;
+			set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
+		}
 
-        private InputType _inputType;
+		public int DelayAfter {
+			get => _delayAfter;
+			set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
+		}
 
-        public InputType InputType {
-            get => _inputType;
-            set => this.RaiseAndSetIfChanged(ref _inputType, value);
-        }
-    }
+		public string HotKey {
+			get => _hotKey;
+			set => this.RaiseAndSetIfChanged(ref _hotKey, value);
+		}
+
+		public AvaloniaList<InputType> InputTypes =>
+			new(Enum.GetValues(typeof(InputType)).Cast<InputType>());
+
+		public InputType InputType {
+			get => _inputType;
+			set => this.RaiseAndSetIfChanged(ref _inputType, value);
+		}
+	}
 }
