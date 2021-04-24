@@ -11,7 +11,7 @@
         <nodes:KeyboardNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*,*">
+    <Grid RowDefinitions="*,*,*,*,*">
         
         <TextBlock Grid.Row="0"
                    TextAlignment="Center">
@@ -30,6 +30,12 @@
         </c:NamedField>
 
         <c:NamedField Grid.Row="3"
+                      Label="Input type">
+            <ComboBox Items="{Binding InputTypes}"
+                      SelectedItem="{Binding InputType}"/>
+        </c:NamedField>
+        
+        <c:NamedField Grid.Row="4"
                       Label="HotKey">
             <TextBox Name="HotKey"
                      Text="{Binding HotKey, Mode=OneWay}"

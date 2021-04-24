@@ -26,6 +26,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
                 DelayBefore = vm.DelayBefore,
                 HotKeys = vm.HotKeys,
                 HotKey = vm.HotKey,
+                InputType = vm.InputType,
             };
 
             InitializeComponent();
@@ -43,6 +44,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
             return new() {
                 Action = new KeyboardAction {
                     Keys = _vm.HotKeys.ToList(),
+                    InputType = _vm.InputType,
                     DelayBefore = _vm.DelayBefore,
                     DelayAfter = _vm.DelayAfter,
                 },
@@ -54,6 +56,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
                 DelayAfter = _vm.DelayAfter,
                 DelayBefore = _vm.DelayBefore,
                 HotKey = _vm.HotKey,
+                InputType = _vm.InputType,
                 HotKeys = _vm.HotKeys.ToArray()
             };
         }

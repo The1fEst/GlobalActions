@@ -33,5 +33,15 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
             get => _hotKey;
             set => this.RaiseAndSetIfChanged(ref _hotKey, value);
         }
+        
+        public AvaloniaList<InputType> InputTypes =>
+            new(Enum.GetValues(typeof(InputType)).Cast<InputType>());
+
+        private InputType _inputType;
+
+        public InputType InputType {
+            get => _inputType;
+            set => this.RaiseAndSetIfChanged(ref _inputType, value);
+        }
     }
 }
