@@ -22,9 +22,6 @@ namespace GlobalActions.GUI.NodeSystem {
 			set => this.RaiseAndSetIfChanged(ref _name, value);
 		}
 
-		public AvaloniaList<Keys> AvailableKeys =>
-			new(Enum.GetValues(typeof(Keys)).Cast<Keys>());
-
 		public AvaloniaList<ScriptMode> AvailableModes =>
 			new(Enum.GetValues(typeof(ScriptMode)).Cast<ScriptMode>());
 

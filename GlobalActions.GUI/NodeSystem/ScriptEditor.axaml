@@ -20,9 +20,12 @@
             <TextBox Text="{Binding Name}"
                      Height="30"
                      Width="150" />
-            <ComboBox Items="{Binding AvailableKeys}"
-                      SelectedItem="{Binding Key}"
-                      Width="150" />
+            <TextBox Text="{Binding Key, Mode=OneWay}"
+                     Height="30"
+                     IsReadOnly="True"
+                     GotFocus="OnGotFocus"
+                     LostFocus="OnLostFocus"
+                     Width="150" />
             <ComboBox Items="{Binding AvailableModes}"
                       SelectedItem="{Binding Mode}"
                       Width="150" />

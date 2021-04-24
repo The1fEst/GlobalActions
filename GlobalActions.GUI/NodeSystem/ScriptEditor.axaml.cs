@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using GlobalActions.GUI.NodeSystem.Nodes;
@@ -80,6 +81,17 @@ namespace GlobalActions.GUI.NodeSystem {
 			var data = _vm.ToSave().Serialize();
 
 			File.WriteAllBytes(filePath, data);
+		}
+
+		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
+			InterceptKeys.Run();
+
+			InterceptKeys.KeyDown += key => { _vm.Key = (Keys) key; };
+		}
+
+		private void OnLostFocus(object? sender, RoutedEventArgs e) {
+			InterceptKeys.Stop();
+			InterceptKeys.KeyDown = null;
 		}
 	}
 }
