@@ -30,9 +30,7 @@ namespace GlobalActions {
         public static void UnregisterHotKey<T>(T id) where T : struct {
             var hotKey = HotKeys.FirstOrDefault(x => x.Id.Equals(id));
 
-            if (hotKey == null) {
-                return;
-            }
+            if (hotKey == null) return;
 
             HotKeys.Remove(hotKey);
         }

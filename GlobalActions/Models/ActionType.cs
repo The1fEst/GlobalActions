@@ -4,6 +4,6 @@ namespace GlobalActions.Models {
         Mouse,
         Text,
         Repeater,
-        Delay,
+        Delay
     }
 }

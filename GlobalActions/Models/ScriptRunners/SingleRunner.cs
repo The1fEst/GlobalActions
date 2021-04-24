@@ -1,20 +1,20 @@
+using System;
+using System.Collections.Generic;
+
 namespace GlobalActions.Models.ScriptRunners {
     public class SingleRunner : IRunner {
         public bool RunnerState { get; set; }
 
-        public void Run(Node nodePipe) {
-            nodePipe.Action.RunAction();
-
-            if (nodePipe.NextNode != null) {
-                Run(nodePipe.NextNode);
-            }
+        public void Run(List<Node> nodePipe) {
+            foreach (var node in nodePipe) node.Action.RunAction();
         }
 
         public void Stop() {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void Toggle(Node nodePipe, HotKey hotKey) {
+        public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+            Console.WriteLine("here");
             Run(nodePipe);
         }
     }

@@ -1,45 +1,45 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using GlobalActions.Models.ScriptRunners;
 
 namespace GlobalActions.Models {
     public class Script : ObservableModel {
+        private bool _isActive;
+
+        private ScriptMode _mode;
+
+        private IRunner _scriptRunner = new SingleRunner();
+
         public Script(string name) {
             Name = name;
         }
 
         public int Id { get; set; }
         public string Name { get; }
-        public Node? NodePipe { get; set; }
+        public List<Node> NodePipe { get; set; }
 
         public HotKey HotKey { get; set; } = null!;
-
-        private ScriptMode _mode;
 
         public ScriptMode Mode {
             get => _mode;
             set => RaiseAndSet(ref _mode, value, SelectRunner);
         }
 
-        private bool _isActive;
-
         public bool IsActive {
             get => _isActive;
             set => RaiseAndSet(ref _isActive, value, ToggleActive);
         }
 
-        private IRunner _scriptRunner = new SingleRunner();
-
         private void ToggleActive() {
-            if (_isActive) {
-                HotKeyHandler.RegisterHotKey(Id, HotKey.Key, HotKey.Modifiers);
-            }
-            else {
+            if (_isActive)
+                HotKeyHandler.RegisterHotKey(Id, HotKey.Key, HotKey.Modifiers.ToArray());
+            else
                 HotKeyHandler.UnregisterHotKey(Id);
-            }
         }
 
         public void Toggle() {
-            if (NodePipe == null || !_isActive) return;
+            if (!NodePipe.Any() || !_isActive) return;
             _scriptRunner.Toggle(NodePipe, HotKey);
         }
 

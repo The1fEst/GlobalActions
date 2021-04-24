@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
+        <Folder Include="Models" />
         <Folder Include="Models\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
@@ -40,6 +41,12 @@
       <Compile Update="NodeSystem\Nodes\RepeatNode.axaml.cs">
         <DependentUpon>RepeatNode.axaml</DependentUpon>
         <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\RepeatNodeViewModel.cs">
+        <DependentUpon>RepeatNode.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\InterceptKeys.cs">
+        <DependentUpon>KeyboardNode.axaml</DependentUpon>
       </Compile>
     </ItemGroup>
     <ItemGroup>

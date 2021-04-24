@@ -23,7 +23,7 @@ namespace GlobalActions.Models {
             var hold = state == -32768;
             var release = state == 0;
 
-            if (down && !State) {
+            if ((down || hold) && !State) {
                 State = true;
                 return KeyStates.Down;
             }

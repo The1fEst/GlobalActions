@@ -11,13 +11,13 @@
         <nodes:KeyboardNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*">
+    <Grid RowDefinitions="*,*,*,*">
         <c:NamedField Grid.Row="0"
                       LabelWidth="100"
                       Label="Delay before">
             <NumericUpDown Minimum="0"
                            Width="150"
-                           Text="{Binding DelayAfter}" />
+                           Text="{Binding DelayBefore}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="1"
@@ -29,9 +29,17 @@
 
         <c:NamedField Grid.Row="2"
                       Label="HotKey">
-            <ComboBox Items="{Binding AvailableKeys}"
-                      Width="150"
-                      SelectedItem="{Binding Key}" />
+            <TextBox Name="HotKey"
+                     Text="{Binding HotKey, Mode=OneWay}"
+                     GotFocus="OnGotFocus"
+                     LostFocus="OnLostFocus"
+                     IsReadOnly="True"
+                     Width="150" />
         </c:NamedField>
+        
+        <Button Grid.Row="3"
+                Click="Button_OnClick"
+                Content="Run" />
+
     </Grid>
 </UserControl>

@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 
 namespace GlobalActions.Models {
     public class ObservableModel {

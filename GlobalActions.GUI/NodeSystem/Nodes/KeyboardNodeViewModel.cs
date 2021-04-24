@@ -2,33 +2,36 @@ using System;
 using System.Linq;
 using Avalonia.Collections;
 using Avalonia.Input;
-using GlobalActions.GUI.ViewModels;
+using GlobalActions.Models;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
     public class KeyboardNodeViewModel : ReactiveObject {
-        private uint _delayBefore;
+        private int _delayAfter;
+        private int _delayBefore;
 
-        public uint DelayBefore {
+        public KeyboardNodeViewModel() {
+            _delayAfter = 0;
+            _delayBefore = 0;
+        }
+
+        public int DelayBefore {
             get => _delayBefore;
             set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
         }
 
-        private uint _delayAfter;
-
-        public uint DelayAfter {
+        public int DelayAfter {
             get => _delayAfter;
             set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
         }
 
-        public AvaloniaList<Key> AvailableKeys =>
-            new(Enum.GetValues(typeof(Key)).Cast<Key>());
+        public AvaloniaList<byte> HotKeys;
 
-        private Key _key = Key.None;
+        private string _hotKey;
 
-        public Key Key {
-            get => _key;
-            set => this.RaiseAndSetIfChanged(ref _key, value);
+        public string HotKey {
+            get => _hotKey;
+            set => this.RaiseAndSetIfChanged(ref _hotKey, value);
         }
     }
 }

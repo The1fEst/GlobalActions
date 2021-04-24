@@ -1,27 +1,21 @@
-using System;
-using System.Linq;
-using Avalonia.Collections;
-using Avalonia.Input;
-using GlobalActions.GUI.ViewModels;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
     public class TextNodeViewModel : ReactiveObject {
+        private uint _delayAfter;
         private uint _delayBefore;
+
+        private string _text;
 
         public uint DelayBefore {
             get => _delayBefore;
             set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
         }
 
-        private uint _delayAfter;
-
         public uint DelayAfter {
             get => _delayAfter;
             set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
         }
-
-        private string _text;
 
         public string Text {
             get => _text;

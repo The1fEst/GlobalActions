@@ -1,6 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
     public class MouseNode : UserControl, INode {
@@ -15,7 +15,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
             DataContext = _vm = new() {
                 DelayAfter = vm.DelayAfter,
                 DelayBefore = vm.DelayBefore,
-                Key = vm.Key,
+                Key = vm.Key
             };
 
             InitializeComponent();
@@ -27,6 +27,10 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
         public object Clone() {
             return new MouseNode(_vm);
+        }
+
+        public Node ToNode() {
+            throw new System.NotImplementedException();
         }
     }
 }

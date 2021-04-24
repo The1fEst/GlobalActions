@@ -16,13 +16,13 @@
     <SplitView IsPaneOpen="True"
                DisplayMode="Inline"
                OpenPaneLength="300">
-        
+
         <SplitView.Pane>
             <ListBox />
         </SplitView.Pane>
-        
+
         <nodeSystem:ScriptEditor />
-        
+
     </SplitView>
 
 </Window>

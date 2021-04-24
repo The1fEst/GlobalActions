@@ -1,21 +1,25 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia;
 using Avalonia.ReactiveUI;
+using GlobalActions.GUI.NodeSystem.Nodes;
 
 namespace GlobalActions.GUI {
-    class Program {
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+    internal class Program {
+        public static void Main(string[] args) {
+            try {
+                BuildAvaloniaApp()
+                    .StartWithClassicDesktopLifetime(args);
+            }
+            finally {
+                InterceptKeys.KeyDown = null;
+                InterceptKeys.Stop();
+            }
+        }
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
+        private static AppBuilder BuildAvaloniaApp() {
+            return AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI();
+        }
     }
 }

@@ -1,36 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlobalActions.Models.ScriptRunners {
     public class ToggleMultiplyRunner : IRunner {
         public bool RunnerState { get; set; }
 
-        public void Run(Node nodePipe) {
-            RunnerState = true;
-
-            while (RunnerState) {
-                nodePipe.Action.RunAction();
-
-                if (nodePipe.NextNode != null) {
-                    nodePipe = nodePipe.NextNode;
-                    continue;
-                }
-
-                break;
-            }
+        public void Run(List<Node> nodePipe) {
+            foreach (var node in nodePipe.TakeWhile(_ => !RunnerState)) node.Action.RunAction();
         }
 
         public void Stop() {
             RunnerState = false;
         }
 
-        public void Toggle(Node nodePipe, HotKey hotKey) {
+        public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+            RunnerState = !RunnerState;
+
             Task.Run(() => {
-                if (!RunnerState) {
+                while (RunnerState) {
+                    Console.WriteLine("here");
                     Run(nodePipe);
                 }
-                else {
-                    Stop();
-                }
+
+                Stop();
             });
         }
     }

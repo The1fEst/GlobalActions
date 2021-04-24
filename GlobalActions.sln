@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalActions", "GlobalActions\GlobalActions.csproj", "{B29C9855-B762-493D-923E-12F7C6803AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalActions.Tests", "GlobalActions.Tests\GlobalActions.Tests.csproj", "{56002BF2-C44F-44F7-9BFF-8FC191FE164B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalActions.GUI", "GlobalActions.GUI\GlobalActions.GUI.csproj", "{51BBC5BB-A090-4D26-A663-9F16948F46CC}"
 EndProject
 Global
@@ -16,10 +14,6 @@ Global
 		{B29C9855-B762-493D-923E-12F7C6803AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B29C9855-B762-493D-923E-12F7C6803AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B29C9855-B762-493D-923E-12F7C6803AB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56002BF2-C44F-44F7-9BFF-8FC191FE164B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56002BF2-C44F-44F7-9BFF-8FC191FE164B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56002BF2-C44F-44F7-9BFF-8FC191FE164B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56002BF2-C44F-44F7-9BFF-8FC191FE164B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51BBC5BB-A090-4D26-A663-9F16948F46CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51BBC5BB-A090-4D26-A663-9F16948F46CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51BBC5BB-A090-4D26-A663-9F16948F46CC}.Release|Any CPU.ActiveCfg = Release|Any CPU

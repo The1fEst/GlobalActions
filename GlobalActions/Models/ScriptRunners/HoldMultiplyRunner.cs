@@ -1,21 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlobalActions.Models.ScriptRunners {
     public class HoldMultiplyRunner : IRunner {
         public bool RunnerState { get; set; }
 
-        public void Run(Node nodePipe) {
-            RunnerState = true;
-
-            while (RunnerState) {
-                nodePipe.Action.RunAction();
-
-                if (nodePipe.NextNode != null) {
-                    nodePipe = nodePipe.NextNode;
-                    continue;
+        public void Run(List<Node> nodePipe) {
+            foreach (var node in nodePipe) {
+                if (!RunnerState) {
+                    return;
                 }
-
-                break;
+                node.Action.RunAction();
             }
         }
 
@@ -23,15 +20,23 @@ namespace GlobalActions.Models.ScriptRunners {
             RunnerState = false;
         }
 
-        public void Toggle(Node nodePipe, HotKey hotKey) {
-            var keyState = new KeyState(hotKey.Key, hotKey.Modifiers);
-            
+        public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+            var keyState = new KeyState(hotKey.Key, hotKey.Modifiers.ToArray());
+            var state = keyState.GetState();
+
+            RunnerState = !RunnerState;
+
             Task.Run(() => {
-                if (keyState.GetState() is KeyStates.Hold or KeyStates.Down) {
-                    Run(nodePipe);
-                }
-                else {
-                    Stop();
+                while (RunnerState) {
+                    if (state is KeyStates.Hold or KeyStates.Down) {
+                        Console.WriteLine("here");
+                        Run(nodePipe);
+                    }
+                    else {
+                        Stop();
+                    }
+
+                    state = keyState.GetState();
                 }
             });
         }
