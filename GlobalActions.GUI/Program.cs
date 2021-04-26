@@ -8,6 +8,7 @@ namespace GlobalActions.GUI {
 
 		public static void Main(string[] args) {
 			try {
+				InterceptKeys.Run();
 				BuildAvaloniaApp()
 					.StartWithClassicDesktopLifetime(args);
 			}

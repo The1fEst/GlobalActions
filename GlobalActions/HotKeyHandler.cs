@@ -24,6 +24,10 @@ namespace GlobalActions {
 			}
 		}
 
+		public static bool HasKey(int key) {
+			return HotKeys.Any(x => x.Key == key);
+		}
+
 		public static void RegisterHotKey<T>(T id, int key, params int[] modifiers) where T : struct {
 			if (HotKeys.Any(x => x.Id.Equals(id))) {
 				return;

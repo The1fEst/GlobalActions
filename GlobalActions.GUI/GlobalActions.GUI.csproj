@@ -45,9 +45,6 @@
       <Compile Update="NodeSystem\Nodes\RepeatNodeViewModel.cs">
         <DependentUpon>RepeatNode.axaml</DependentUpon>
       </Compile>
-      <Compile Update="NodeSystem\Nodes\InterceptKeys.cs">
-        <DependentUpon>KeyboardNode.axaml</DependentUpon>
-      </Compile>
       <Compile Update="Views\ScriptSelectorViewModel.cs">
         <DependentUpon>ScriptSelector.axaml</DependentUpon>
       </Compile>

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static GlobalActions.Win32Interop;
 
-namespace GlobalActions.GUI.NodeSystem.Nodes {
+namespace GlobalActions.GUI {
 	public class InterceptKeys {
 		public delegate void OnKeyDown(int key);
 
@@ -45,6 +45,10 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 			var vkCode = Marshal.ReadInt32(lParam);
 			KeyDown?.Invoke(vkCode);
+
+			if (HotKeyHandler.HasKey(vkCode)) {
+				return IntPtr.Zero;
+			}
 
 			return CallNextHookEx(_hookId, nCode, wParam, lParam);
 		}

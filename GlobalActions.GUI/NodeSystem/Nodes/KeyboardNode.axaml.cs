@@ -63,7 +63,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		}
 
 		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
-			InterceptKeys.Run();
 			_vm.HotKeys = new AvaloniaList<byte>();
 
 			InterceptKeys.KeyDown += key => {
@@ -78,7 +77,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		}
 
 		private void OnLostFocus(object? sender, RoutedEventArgs e) {
-			InterceptKeys.Stop();
 			InterceptKeys.KeyDown = null;
 		}
 	}

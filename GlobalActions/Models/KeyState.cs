@@ -10,7 +10,7 @@ namespace GlobalActions.Models {
 			Key = key;
 		}
 
-		private int Key { get; }
+		public int Key { get; }
 
 		private bool State { get; set; }
 
