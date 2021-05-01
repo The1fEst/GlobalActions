@@ -2,22 +2,25 @@ using System;
 using System.Linq;
 using Avalonia.Collections;
 using Avalonia.Input;
+using GlobalActions.Models;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class MouseNodeViewModel : ReactiveObject {
-		private uint _delayAfter;
+		private int _delayAfter;
 
-		private uint _delayBefore;
+		private int _delayBefore;
 
-		private MouseButton _key = MouseButton.None;
+		private InputType _inputType;
 
-		public uint DelayBefore {
+		MouseButton _key = MouseButton.None;
+
+		public int DelayBefore {
 			get => _delayBefore;
 			set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
 		}
 
-		public uint DelayAfter {
+		public int DelayAfter {
 			get => _delayAfter;
 			set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
 		}
@@ -28,6 +31,14 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		public MouseButton Key {
 			get => _key;
 			set => this.RaiseAndSetIfChanged(ref _key, value);
+		}
+
+		public AvaloniaList<InputType> InputTypes =>
+			new(Enum.GetValues(typeof(InputType)).Cast<InputType>());
+
+		public InputType InputType {
+			get => _inputType;
+			set => this.RaiseAndSetIfChanged(ref _inputType, value);
 		}
 	}
 }

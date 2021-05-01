@@ -10,11 +10,11 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		private int _delayBefore;
 
-		private string _hotKey = "";
+		private string _key = "";
 
 		private InputType _inputType;
 
-		public AvaloniaList<byte> HotKeys = new();
+		public AvaloniaList<byte> Keys = new();
 
 		public int DelayBefore {
 			get => _delayBefore;
@@ -26,9 +26,9 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
 		}
 
-		public string HotKey {
-			get => _hotKey;
-			set => this.RaiseAndSetIfChanged(ref _hotKey, value);
+		public string Key {
+			get => _key;
+			set => this.RaiseAndSetIfChanged(ref _key, value);
 		}
 
 		public AvaloniaList<InputType> InputTypes =>

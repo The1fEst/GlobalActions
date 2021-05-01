@@ -1,27 +1,25 @@
 using System;
 using Avalonia.Collections;
+using Avalonia.Input;
 using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	[Serializable]
-	public class KeyboardNodeSave : INodeSave {
+	public class MouseNodeSave : INodeSave {
 		public int DelayBefore { get; set; }
 
 		public int DelayAfter { get; set; }
 
-		public byte[] Keys { get; set; } = new byte[0];
+		public MouseButton Key { get; set; }
 
 		public InputType InputType { get; set; }
 
-		public string Key { get; set; } = "";
-
 		public INode FromSave() {
-			return new KeyboardNode(new KeyboardNodeViewModel {
+			return new MouseNode(new MouseNodeViewModel {
 				DelayAfter = DelayAfter,
 				DelayBefore = DelayBefore,
 				Key = Key,
 				InputType = InputType,
-				Keys = new AvaloniaList<byte>(Keys),
 			});
 		}
 	}

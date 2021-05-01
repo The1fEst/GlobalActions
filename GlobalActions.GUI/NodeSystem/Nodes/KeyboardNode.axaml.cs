@@ -15,7 +15,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		public KeyboardNode() {
 			DataContext = _vm = new KeyboardNodeViewModel {
-				HotKey = Keys.None.ToString(),
+				Key = Keys.None.ToString(),
 			};
 
 			InitializeComponent();
@@ -25,8 +25,8 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			DataContext = _vm = new KeyboardNodeViewModel {
 				DelayAfter = vm.DelayAfter,
 				DelayBefore = vm.DelayBefore,
-				HotKeys = vm.HotKeys,
-				HotKey = vm.HotKey,
+				Keys = vm.Keys,
+				Key = vm.Key,
 				InputType = vm.InputType,
 			};
 
@@ -40,7 +40,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		public Node ToNode() {
 			return new() {
 				Action = new KeyboardAction {
-					Keys = _vm.HotKeys.ToList(),
+					Keys = _vm.Keys.ToList(),
 					InputType = _vm.InputType,
 					DelayBefore = _vm.DelayBefore,
 					DelayAfter = _vm.DelayAfter,
@@ -52,9 +52,9 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			return new KeyboardNodeSave {
 				DelayAfter = _vm.DelayAfter,
 				DelayBefore = _vm.DelayBefore,
-				HotKey = _vm.HotKey,
+				Key = _vm.Key,
 				InputType = _vm.InputType,
-				HotKeys = _vm.HotKeys.ToArray(),
+				Keys = _vm.Keys.ToArray(),
 			};
 		}
 
@@ -63,16 +63,16 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		}
 
 		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
-			_vm.HotKeys = new AvaloniaList<byte>();
+			_vm.Keys = new AvaloniaList<byte>();
 
 			InterceptKeys.KeyDown += key => {
 				if (key == (int) Keys.Delete) {
-					_vm.HotKey = Keys.None.ToString();
+					_vm.Key = Keys.None.ToString();
 					return;
 				}
 
-				_vm.HotKeys.Add((byte) key);
-				_vm.HotKey = string.Join('+', _vm.HotKeys.Select(x => (Keys) x));
+				_vm.Keys.Add((byte) key);
+				_vm.Key = string.Join('+', _vm.Keys.Select(x => (Keys) x));
 			};
 		}
 

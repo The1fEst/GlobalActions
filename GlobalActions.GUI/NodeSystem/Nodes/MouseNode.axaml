@@ -11,27 +11,40 @@
         <nodes:MouseNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*">
-        <c:NamedField Grid.Row="0"
-                      LabelWidth="100"
-                      Label="Delay before">
-            <NumericUpDown Minimum="0"
-                           Width="150"
-                           Text="{Binding DelayBefore}" />
-        </c:NamedField>
+    <Grid RowDefinitions="*,*,*,*,*">
+
+        <TextBlock Grid.Row="0"
+                   TextAlignment="Center">
+            Mouse buttons
+        </TextBlock>
 
         <c:NamedField Grid.Row="1"
-                      Label="Delay after">
-            <NumericUpDown Minimum="0"
-                           Width="150"
-                           Text="{Binding DelayAfter}" />
+                      LabelWidth="100"
+                      Label="Delay before">
+            <TextBox Width="150"
+                     Text="{Binding DelayBefore}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="2"
+                      Label="Delay after">
+            <TextBox Width="150"
+                     Text="{Binding DelayAfter}" />
+        </c:NamedField>
+
+        <c:NamedField Grid.Row="3"
+                      Label="Input type">
+            <ComboBox Items="{Binding InputTypes}"
+                      Width="150"
+                      SelectedItem="{Binding InputType}" />
+        </c:NamedField>
+
+        <c:NamedField Grid.Row="4"
                       Label="HotKey">
             <ComboBox Items="{Binding AvailableKeys}"
                       Width="150"
                       SelectedItem="{Binding Key}" />
         </c:NamedField>
+
     </Grid>
+
 </UserControl>

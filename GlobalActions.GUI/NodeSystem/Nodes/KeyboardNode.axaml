@@ -32,13 +32,14 @@
         <c:NamedField Grid.Row="3"
                       Label="Input type">
             <ComboBox Items="{Binding InputTypes}"
+                      Width="150"
                       SelectedItem="{Binding InputType}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="4"
                       Label="HotKey">
             <TextBox Name="HotKey"
-                     Text="{Binding HotKey, Mode=OneWay}"
+                     Text="{Binding Key, Mode=OneWay}"
                      GotFocus="OnGotFocus"
                      LostFocus="OnLostFocus"
                      IsReadOnly="True" />

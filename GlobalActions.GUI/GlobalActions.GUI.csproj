@@ -54,6 +54,9 @@
       <Compile Update="NodeSystem\Nodes\INodeSave.cs">
         <DependentUpon>INode.cs</DependentUpon>
       </Compile>
+      <Compile Update="NodeSystem\Nodes\MouseNodeSave.cs">
+        <DependentUpon>MouseNode.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />

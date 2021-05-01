@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GlobalActions.Models;
+using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class MouseNode : UserControl, INode {
@@ -27,11 +28,23 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		}
 
 		public Node ToNode() {
-			throw new NotImplementedException();
+			return new() {
+				Action = new MouseAction {
+					Key = _vm.Key,
+					InputType = _vm.InputType,
+					DelayBefore = _vm.DelayBefore,
+					DelayAfter = _vm.DelayAfter,
+				},
+			};
 		}
 
 		public INodeSave ToSave() {
-			throw new NotImplementedException();
+			return new MouseNodeSave {
+				DelayAfter = _vm.DelayAfter,
+				DelayBefore = _vm.DelayBefore,
+				Key = _vm.Key,
+				InputType = _vm.InputType,
+			};
 		}
 
 		private void InitializeComponent() {
