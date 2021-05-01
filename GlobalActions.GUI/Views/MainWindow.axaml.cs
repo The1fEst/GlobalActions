@@ -19,14 +19,6 @@ namespace GlobalActions.GUI.Views {
 
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
-			
-			Task.Run(() => {
-				while (HotKeyHandler.GetHotKey<int>(out var key)) {
-					if (key != default) {
-						ScriptsList.Instance.Toggle(key);
-					}
-				}
-			});
 		}
 	}
 }

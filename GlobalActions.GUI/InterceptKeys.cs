@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using GlobalActions.Models;
 using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.GUI {
@@ -39,15 +40,26 @@ namespace GlobalActions.GUI {
 		}
 
 		private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
-			if (nCode < 0 || (int) wParam is not (WM_KEYDOWN or WM_SYSKEYDOWN)) {
+			if (nCode < 0) {
 				return CallNextHookEx(_hookId, nCode, wParam, lParam);
 			}
 
 			var vkCode = Marshal.ReadInt32(lParam);
-			KeyDown?.Invoke(vkCode);
+			var wmParam = (WM) wParam;
+			var isDown = wmParam is WM.WM_KEYDOWN or WM.WM_SYSKEYDOWN;
+			var isUp = wmParam is WM.WM_KEYUP or WM.WM_SYSKEYUP;
 
-			if (HotKeyHandler.HasKey(vkCode)) {
-				return IntPtr.Zero;
+			if (isDown || isUp) {
+				var hotKey = HotKeyHandler.HasKey(vkCode);
+
+				if (hotKey != null) {
+					Task.Run(() => HotKeyHandler.TryRunAction(hotKey, wmParam));
+					return IntPtr.Parse("1");
+				}
+			}
+
+			if (isDown) {
+				KeyDown?.Invoke(vkCode);
 			}
 
 			return CallNextHookEx(_hookId, nCode, wParam, lParam);

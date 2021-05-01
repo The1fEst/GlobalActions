@@ -22,8 +22,7 @@ namespace GlobalActions.Models.ScriptRunners {
 		}
 
 		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
-			var keyState = new KeyState(hotKey.Key, hotKey.Modifiers.ToArray());
-			var state = keyState.GetState();
+			var state = HotKeyHandler.GetState(hotKey.Key);
 
 			RunnerState = !RunnerState;
 
@@ -37,7 +36,7 @@ namespace GlobalActions.Models.ScriptRunners {
 						Stop();
 					}
 
-					state = keyState.GetState();
+					state = HotKeyHandler.GetState(hotKey.Key);
 				}
 			});
 		}

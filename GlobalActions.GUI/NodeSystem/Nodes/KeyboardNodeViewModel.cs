@@ -10,16 +10,11 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		private int _delayBefore;
 
-		private string _hotKey;
+		private string _hotKey = "";
 
 		private InputType _inputType;
 
-		public AvaloniaList<byte> HotKeys;
-
-		public KeyboardNodeViewModel() {
-			_delayAfter = 0;
-			_delayBefore = 0;
-		}
+		public AvaloniaList<byte> HotKeys = new();
 
 		public int DelayBefore {
 			get => _delayBefore;

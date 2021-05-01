@@ -8,7 +8,11 @@ namespace GlobalActions.Models.ScriptRunners {
 		public bool RunnerState { get; set; }
 
 		public void Run(List<Node> nodePipe) {
-			foreach (var node in nodePipe.TakeWhile(_ => !RunnerState)) {
+			foreach (var node in nodePipe) {
+				if (!RunnerState) {
+					return;
+				}
+
 				node.Action.RunAction();
 			}
 		}
@@ -20,14 +24,16 @@ namespace GlobalActions.Models.ScriptRunners {
 		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
 			RunnerState = !RunnerState;
 
-			Task.Run(() => {
-				while (RunnerState) {
-					Console.WriteLine("here");
-					Run(nodePipe);
-				}
+			if (RunnerState) {
+				Task.Run(() => {
+					while (RunnerState) {
+						Console.WriteLine("here");
+						Run(nodePipe);
+					}
 
-				Stop();
-			});
+					Stop();
+				});
+			}
 		}
 	}
 }

@@ -20,12 +20,12 @@
             <TextBox Text="{Binding Name}"
                      Height="30"
                      Width="150" />
-            <TextBox Text="{Binding Key, Mode=OneWay}"
+            <TextBox Text="{Binding Keys, Mode=OneWay}"
                      Height="30"
                      IsReadOnly="True"
                      GotFocus="OnGotFocus"
                      LostFocus="OnLostFocus"
-                     Width="150" />
+                     Width="350" />
             <ComboBox Items="{Binding AvailableModes}"
                       SelectedItem="{Binding Mode}"
                       Width="150" />

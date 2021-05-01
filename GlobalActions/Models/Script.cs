@@ -21,7 +21,12 @@ namespace GlobalActions.Models {
 
 		public List<Node> NodePipe { get; set; }
 
-		public HotKey HotKey { get; set; } = null!;
+		private HotKey _hotKey = new();  
+
+		public HotKey HotKey { 
+			get => _hotKey;
+			set => RaiseAndSet(ref _hotKey, value, ChangeHotKey);
+		}
 
 		public ScriptMode Mode {
 			get => _mode;
@@ -33,9 +38,14 @@ namespace GlobalActions.Models {
 			set => RaiseAndSet(ref _isActive, value, ToggleActive);
 		}
 
+		private void ChangeHotKey() {
+			HotKeyHandler.UnregisterHotKey(Id);
+			HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
+		}
+
 		private void ToggleActive() {
 			if (_isActive) {
-				HotKeyHandler.RegisterHotKey(Id, HotKey.Key, HotKey.Modifiers.ToArray());
+				HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
 			}
 			else {
 				HotKeyHandler.UnregisterHotKey(Id);

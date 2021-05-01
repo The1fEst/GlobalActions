@@ -598,9 +598,11 @@ namespace GlobalActions {
 
 		public const int WH_KEYBOARD_LL = 13;
 
-		public const int WM_KEYDOWN = 0x0100;
+		[DllImport("User32.dll")]
+		public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifer, int vlc);
 
-		public const int WM_SYSKEYDOWN = 0x0104;
+		[DllImport("User32.dll")]
+		public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]

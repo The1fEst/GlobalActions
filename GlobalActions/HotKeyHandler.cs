@@ -2,42 +2,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GlobalActions.Models;
+using static GlobalActions.Win32Interop;
 
 namespace GlobalActions {
-	public class HotKeyHandler {
-		private static readonly List<HotKey> HotKeys = new();
+	public static class HotKeyHandler {
+		private static readonly List<HotKeyState> HotKeys = new();
 
-		public static bool GetHotKey<T>(out T outHotKey) where T : struct {
-			outHotKey = default;
-			try {
-				var hotkey = HotKeys.FirstOrDefault(x => x.IsDown);
+		public static HotKeyState? HasKey(int key) {
+			return HotKeys.FirstOrDefault(x => x.Key == key && x.ModifiersIsDown());
+		}
 
-				if (hotkey == null) {
-					return true;
-				}
-
-				outHotKey = (T) Convert.ChangeType(hotkey.Id, typeof(T));
-				return true;
-			}
-			catch {
-				return true;
+		public static void TryRunAction(HotKeyState hotKey, WM keyState) {
+			if (hotKey.GetKeyState(keyState) == KeyStates.Down) {
+				hotKey.Action();
 			}
 		}
 
-		public static bool HasKey(int key) {
-			return HotKeys.Any(x => x.Key == key);
+		public static KeyStates GetState(int key) {
+			return HotKeys.FirstOrDefault(x => x.Key == key)?.CurrentState ?? KeyStates.None;
 		}
 
-		public static void RegisterHotKey<T>(T id, int key, params int[] modifiers) where T : struct {
-			if (HotKeys.Any(x => x.Id.Equals(id))) {
+		public static void RegisterHotKey(int id, Action action, int key, params int[] modifiers) {
+			if (HotKeys.Any(x => x.Id == id || x.Key == key) || key == 0) {
 				return;
 			}
 
-			HotKeys.Add(new HotKey(id, key, modifiers));
+			HotKeys.Add(new HotKeyState(id, action, key, modifiers));
 		}
 
-		public static void UnregisterHotKey<T>(T id) where T : struct {
-			var hotKey = HotKeys.FirstOrDefault(x => x.Id.Equals(id));
+		public static void UnregisterHotKey(int id) {
+			var hotKey = HotKeys.FirstOrDefault(x => x.Id == id);
 
 			if (hotKey == null) {
 				return;
@@ -49,13 +43,15 @@ namespace GlobalActions {
 		public static void UnregisterAllHotKeys() {
 			HotKeys.Clear();
 		}
+	}
 
-		private class HotKey : KeyState {
-			public HotKey(object id, int key, params int[] modifiers) : base(key, modifiers) {
-				Id = id;
-			}
-
-			public object Id { get; }
+	public class HotKeyState : KeyState {
+		public HotKeyState(int id, Action action, int key, params int[] modifiers) : base(key, modifiers) {
+			Id = id;
+			Action = action;
 		}
+
+		public int Id { get; set; }
+		public Action Action { get; set; }
 	}
 }

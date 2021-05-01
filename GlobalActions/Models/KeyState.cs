@@ -5,53 +5,45 @@ namespace GlobalActions.Models {
 	public class KeyState {
 		private readonly int[] _modifiers;
 
-		public KeyState(int key, params int[] modifiers) {
+		protected KeyState(int key, params int[] modifiers) {
 			_modifiers = modifiers;
 			Key = key;
 		}
 
 		public int Key { get; }
 
+		public KeyStates CurrentState { get; set; }
+
 		private bool State { get; set; }
 
-		public bool IsDown => GetState() == KeyStates.Down;
+		public bool ModifiersIsDown() {
+			return _modifiers.Select(x =>
+					GetAsyncKeyState(x) != 0)
+				.All(x => x);
+		}
 
-		private KeyStates GetKeyState(int key) {
-			if (key == 0) {
-				return KeyStates.None;
-			}
+		public KeyStates GetKeyState(WM state) {
+			var down = !State && state == WM.WM_KEYDOWN;
+			var hold = State && state == WM.WM_KEYDOWN;
+			var release = State && state == WM.WM_KEYUP;
 
-			var state = GetAsyncKeyState(key);
-			var down = state == -32767;
-			var hold = state == -32768;
-			var release = state == 0;
+			var modifiersIsDown = ModifiersIsDown();
 
-			if ((down || hold) && !State) {
+			if ((down || hold) && modifiersIsDown && !State) {
 				State = true;
-				return KeyStates.Down;
+				return CurrentState = KeyStates.Down;
 			}
 
-			if ((hold || down) && State) {
-				return KeyStates.Hold;
+			if ((hold || down) && modifiersIsDown && State) {
+				return CurrentState = KeyStates.Hold;
 			}
 
 			if (!release || !State) {
-				return KeyStates.None;
+				return CurrentState = KeyStates.None;
 			}
 
 			State = false;
-			return KeyStates.Release;
-		}
-
-		public KeyStates GetState() {
-			var keyState = GetKeyState(Key);
-			var modifiersState = _modifiers.Select(GetKeyState).ToList();
-
-			if (!modifiersState.Any() || modifiersState.All(x => x is KeyStates.Down or KeyStates.Hold)) {
-				return keyState;
-			}
-
-			return KeyStates.None;
+			return CurrentState = KeyStates.Release;
 		}
 	}
 }

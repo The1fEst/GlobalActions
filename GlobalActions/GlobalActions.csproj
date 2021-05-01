@@ -5,4 +5,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\GlobalActions.Contract\GlobalActions.Contract.csproj" />
+      <ProjectReference Include="..\GlobalActions.HotKeys\GlobalActions.HotKeys.csproj" />
+    </ItemGroup>
+
 </Project>

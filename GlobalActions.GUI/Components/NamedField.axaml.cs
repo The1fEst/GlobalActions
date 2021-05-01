@@ -16,7 +16,7 @@ namespace GlobalActions.GUI.Components {
 				o => o.LabelWidth,
 				(o, v) => o.LabelWidth = v);
 
-		private string _label;
+		private string _label = "";
 
 		private GridLength _labelWidth;
 

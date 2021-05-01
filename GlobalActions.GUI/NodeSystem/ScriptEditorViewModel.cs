@@ -7,11 +7,11 @@ using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem {
 	public class ScriptEditorViewModel : ReactiveObject {
-		private Keys _key;
+		private HotKey _hotKey = new();
 
 		private ScriptMode _mode;
 
-		private string _name;
+		private string _name = "";
 
 		private AvaloniaList<INode> _nodes = new();
 
@@ -30,9 +30,16 @@ namespace GlobalActions.GUI.NodeSystem {
 			set => this.RaiseAndSetIfChanged(ref _mode, value);
 		}
 
-		public Keys Key {
-			get => _key;
-			set => this.RaiseAndSetIfChanged(ref _key, value);
+		private string _keys = "";
+
+		public string Keys {
+			get => _keys;
+			set => this.RaiseAndSetIfChanged(ref _keys, value);
+		}
+
+		public HotKey HotKey {
+			get => _hotKey;
+			set => this.RaiseAndSetIfChanged(ref _hotKey, value);
 		}
 
 		public AvaloniaList<INode> AvailableNodes {
@@ -60,14 +67,16 @@ namespace GlobalActions.GUI.NodeSystem {
 			return new(Nodes
 					.Select(node => node.ToSave())
 					.ToArray(),
-				Key,
+				HotKey,
+				Keys,
 				Mode,
 				Name);
 		}
 
 		public static ScriptEditorViewModel FromSave(ScriptSave script) {
 			return new() {
-				Key = script.Key,
+				HotKey = script.Key,
+				Keys = script.Keys,
 				Mode = script.Mode,
 				Name = script.Name,
 				Nodes = new AvaloniaList<INode>(script.Nodes.Select(node => node.FromSave())),
@@ -77,16 +86,19 @@ namespace GlobalActions.GUI.NodeSystem {
 
 	[Serializable]
 	public class ScriptSave {
-		public ScriptSave(INodeSave[] nodes, Keys key, ScriptMode mode, string name) {
+		public ScriptSave(INodeSave[] nodes, HotKey key, string keys, ScriptMode mode, string name) {
 			Nodes = nodes;
 			Key = key;
+			Keys = keys;
 			Mode = mode;
 			Name = name;
 		}
 
 		public INodeSave[] Nodes { get; set; }
 
-		public Keys Key { get; set; }
+		public HotKey Key { get; set; }
+
+		public string Keys { get; set; }
 
 		public ScriptMode Mode { get; set; }
 

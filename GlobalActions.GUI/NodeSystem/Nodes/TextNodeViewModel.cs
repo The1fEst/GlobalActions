@@ -6,7 +6,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		private uint _delayBefore;
 
-		private string _text;
+		private string _text = "";
 
 		public uint DelayBefore {
 			get => _delayBefore;

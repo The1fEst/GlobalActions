@@ -1,7 +1,11 @@
+using System;
+using System.Collections.Generic;
+
 namespace GlobalActions.Models {
+	[Serializable]
 	public class HotKey {
 		public int Key { get; set; }
 
-		public int[] Modifiers { get; set; } = new int[0];
+		public List<int> Modifiers { get; set; } = new();
 	}
 }

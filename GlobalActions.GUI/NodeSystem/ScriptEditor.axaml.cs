@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Avalonia.Controls;
@@ -60,7 +61,7 @@ namespace GlobalActions.GUI.NodeSystem {
 			scriptsList.Add(_vm.Name);
 			scriptsList.Edit(_vm.Name, script => {
 				script.Mode = _vm.Mode;
-				script.HotKey = new HotKey {Key = (int) _vm.Key};
+				script.HotKey = _vm.HotKey;
 				script.IsActive = true;
 				script.NodePipe = _vm.Nodes.Select(node => node.ToNode()).ToList();
 			});
@@ -83,15 +84,49 @@ namespace GlobalActions.GUI.NodeSystem {
 			File.WriteAllBytes(filePath, data);
 		}
 
+		private void ClearHotKey() {
+			_vm.Keys = Keys.None.ToString();
+			_vm.HotKey.Key = 0;
+			_vm.HotKey.Modifiers = new();
+		}
+		
 		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
 			InterceptKeys.Run();
+			_vm.HotKey = new();
 
-			InterceptKeys.KeyDown += key => { _vm.Key = (Keys) key; };
+			InterceptKeys.KeyDown += key => {
+				if (key == (int) Keys.Delete) {
+					ClearHotKey();
+					return;
+				}
+
+				if ((Keys) key is Keys.LShiftKey or Keys.LControlKey or Keys.LMenu
+				    && _vm.HotKey.Modifiers.All(x => x != key)) {
+					_vm.HotKey.Modifiers.Add(key);
+				}
+				else {
+					_vm.HotKey.Key = key;
+				}
+
+				_vm.Keys = string.Empty;
+
+				if (_vm.HotKey.Modifiers.Any()) {
+					_vm.Keys = string.Join('+', _vm.HotKey.Modifiers.Select(x => (Keys) x)) + "+";
+				}
+
+				if (_vm.HotKey.Key != 0) {
+					_vm.Keys += (Keys) _vm.HotKey.Key;
+				}
+			};
 		}
 
 		private void OnLostFocus(object? sender, RoutedEventArgs e) {
 			InterceptKeys.Stop();
 			InterceptKeys.KeyDown = null;
+
+			if (_vm.HotKey.Key == 0) {
+				ClearHotKey();
+			}
 		}
 	}
 }
