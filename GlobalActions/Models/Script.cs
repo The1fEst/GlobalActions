@@ -5,6 +5,8 @@ using GlobalActions.Models.ScriptRunners;
 
 namespace GlobalActions.Models {
 	public class Script : ObservableModel {
+		private HotKey _hotKey = new();
+
 		private bool _isActive;
 
 		private ScriptMode _mode;
@@ -21,9 +23,7 @@ namespace GlobalActions.Models {
 
 		public List<Node> NodePipe { get; set; }
 
-		private HotKey _hotKey = new();  
-
-		public HotKey HotKey { 
+		public HotKey HotKey {
 			get => _hotKey;
 			set => RaiseAndSet(ref _hotKey, value, ChangeHotKey);
 		}

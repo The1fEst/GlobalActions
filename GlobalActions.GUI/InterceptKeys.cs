@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using GlobalActions.Models;
 using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.GUI {

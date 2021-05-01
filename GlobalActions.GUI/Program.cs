@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-using GlobalActions.GUI.NodeSystem.Nodes;
 
 namespace GlobalActions.GUI {
 	internal class Program {

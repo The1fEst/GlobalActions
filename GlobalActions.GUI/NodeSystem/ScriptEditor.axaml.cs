@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Avalonia.Controls;
@@ -87,12 +87,12 @@ namespace GlobalActions.GUI.NodeSystem {
 		private void ClearHotKey() {
 			_vm.Keys = Keys.None.ToString();
 			_vm.HotKey.Key = 0;
-			_vm.HotKey.Modifiers = new();
+			_vm.HotKey.Modifiers = new List<int>();
 		}
-		
+
 		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
 			InterceptKeys.Run();
-			_vm.HotKey = new();
+			_vm.HotKey = new HotKey();
 
 			InterceptKeys.KeyDown += key => {
 				if (key == (int) Keys.Delete) {

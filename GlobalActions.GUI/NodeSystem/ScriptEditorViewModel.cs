@@ -9,6 +9,8 @@ namespace GlobalActions.GUI.NodeSystem {
 	public class ScriptEditorViewModel : ReactiveObject {
 		private HotKey _hotKey = new();
 
+		private string _keys = "";
+
 		private ScriptMode _mode;
 
 		private string _name = "";
@@ -29,8 +31,6 @@ namespace GlobalActions.GUI.NodeSystem {
 			get => _mode;
 			set => this.RaiseAndSetIfChanged(ref _mode, value);
 		}
-
-		private string _keys = "";
 
 		public string Keys {
 			get => _keys;

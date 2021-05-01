@@ -56,7 +56,6 @@
       </Compile>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\GlobalActions.HotKeys\GlobalActions.HotKeys.csproj" />
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />
     </ItemGroup>
 </Project>

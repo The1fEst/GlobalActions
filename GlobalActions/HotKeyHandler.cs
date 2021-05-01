@@ -52,6 +52,7 @@ namespace GlobalActions {
 		}
 
 		public int Id { get; set; }
+
 		public Action Action { get; set; }
 	}
 }
