@@ -1,4 +1,8 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Input.Platform;
 
 namespace GlobalActions.Models.Actions {
 	public class TextAction : IAction {
@@ -9,7 +13,21 @@ namespace GlobalActions.Models.Actions {
 		public int DelayAfter { get; set; }
 
 		public void RunAction() {
-			throw new NotImplementedException();
+			Thread.Sleep(DelayBefore);
+
+			Task.Run(async () => {
+				await Application.Current.Clipboard.SetTextAsync(Text);
+				
+				var ctrl = (byte) Keys.LControlKey;
+				var v = (byte) Keys.V;
+				
+				Win32Interop.keybd_event(ctrl, ctrl, 0, 0);
+				Win32Interop.keybd_event(v, v, 0, 0);
+				Win32Interop.keybd_event(v, v, Win32Interop.KEYEVENTF.KEYEVENTF_KEYUP, 0);
+				Win32Interop.keybd_event(ctrl, ctrl, Win32Interop.KEYEVENTF.KEYEVENTF_KEYUP, 0);
+			});
+
+			Thread.Sleep(DelayAfter);
 		}
 	}
 }

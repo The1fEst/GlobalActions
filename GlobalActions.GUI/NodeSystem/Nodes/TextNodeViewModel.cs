@@ -2,18 +2,18 @@ using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class TextNodeViewModel : ReactiveObject {
-		private uint _delayAfter;
+		private int _delayAfter;
 
-		private uint _delayBefore;
+		private int _delayBefore;
 
 		private string _text = "";
 
-		public uint DelayBefore {
+		public int DelayBefore {
 			get => _delayBefore;
 			set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
 		}
 
-		public uint DelayAfter {
+		public int DelayAfter {
 			get => _delayAfter;
 			set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
 		}

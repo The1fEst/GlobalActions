@@ -11,26 +11,28 @@
         <nodes:TextNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*">
-        <c:NamedField Grid.Row="0"
-                      LabelWidth="100"
-                      Label="Delay before">
-            <NumericUpDown Minimum="0"
-                           Width="150"
-                           Text="{Binding DelayBefore}" />
-        </c:NamedField>
+    <Grid RowDefinitions="*,*,*,*">
+
+        <TextBlock Grid.Row="0"
+                   TextAlignment="Center">
+            Text
+        </TextBlock>
 
         <c:NamedField Grid.Row="1"
-                      Label="Delay after">
-            <NumericUpDown Minimum="0"
-                           Width="150"
-                           Text="{Binding DelayAfter}" />
+                      LabelWidth="100"
+                      Label="Delay before">
+            <TextBox Text="{Binding DelayBefore}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="2"
-                      Label="Text">
-            <TextBox Text="{Binding Text}"
-                     Width="150" />
+                      Label="Delay after">
+            <TextBox Text="{Binding DelayAfter}" />
         </c:NamedField>
+
+        <c:NamedField Grid.Row="3"
+                      Label="Text">
+            <TextBox Text="{Binding Text}" />
+        </c:NamedField>
+
     </Grid>
 </UserControl>

@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GlobalActions.Models;
+using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class TextNode : UserControl, INode {
@@ -27,11 +28,21 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 		}
 
 		public Node ToNode() {
-			throw new NotImplementedException();
+			return new() {
+				Action = new TextAction {
+					Text = _vm.Text,
+					DelayBefore = _vm.DelayBefore,
+					DelayAfter = _vm.DelayAfter,
+				},
+			};
 		}
 
 		public INodeSave ToSave() {
-			throw new NotImplementedException();
+			return new TextNodeSave {
+				DelayAfter = _vm.DelayAfter,
+				DelayBefore = _vm.DelayBefore,
+				Text = _vm.Text,
+			};
 		}
 
 		private void InitializeComponent() {
