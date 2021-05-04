@@ -63,6 +63,8 @@ namespace GlobalActions.GUI.NodeSystem {
 			set => this.RaiseAndSetIfChanged(ref _nodes, value);
 		}
 
+		public bool IsActive { get; set; }
+
 		public ScriptSave ToSave() {
 			return new(Nodes
 					.Select(node => node.ToSave())

@@ -3,7 +3,6 @@ using Avalonia.ReactiveUI;
 
 namespace GlobalActions.GUI {
 	internal class Program {
-		public const string ScriptsDirectory = "Scripts";
 
 		public static void Main(string[] args) {
 			try {

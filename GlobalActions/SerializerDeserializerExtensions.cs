@@ -2,7 +2,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace GlobalActions.GUI {
+namespace GlobalActions {
 	public static class SerializerDeserializerExtensions {
 		public static byte[] Serialize(this object data) {
 			using var memoryStream = new MemoryStream();

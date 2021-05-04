@@ -18,32 +18,6 @@ namespace GlobalActions.GUI.NodeSystem {
 			InitializeComponent();
 		}
 
-		public void LoadFromFile(string name) {
-			if (!Directory.Exists(Program.ScriptsDirectory)) {
-				Directory.CreateDirectory(Program.ScriptsDirectory);
-
-				DataContext = _vm = new ScriptEditorViewModel {
-					Name = name,
-				};
-
-				return;
-			}
-
-			var filePath = Path.Combine(Program.ScriptsDirectory, name);
-			if (!File.Exists(filePath)) {
-				DataContext = _vm = new ScriptEditorViewModel {
-					Name = name,
-				};
-
-				return;
-			}
-
-			var data = File.ReadAllBytes(filePath);
-			var script = data.Deserializer<ScriptSave>();
-
-			DataContext = _vm = ScriptEditorViewModel.FromSave(script);
-		}
-
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
 		}
@@ -65,23 +39,6 @@ namespace GlobalActions.GUI.NodeSystem {
 				script.IsActive = true;
 				script.NodePipe = _vm.Nodes.Select(node => node.ToNode()).ToList();
 			});
-
-			SaveToFile(_vm.Name);
-		}
-
-		private void SaveToFile(string name) {
-			if (!Directory.Exists(Program.ScriptsDirectory)) {
-				Directory.CreateDirectory(Program.ScriptsDirectory);
-			}
-
-			var filePath = Path.Combine(Program.ScriptsDirectory, name);
-			if (!File.Exists(filePath)) {
-				File.Create(filePath).Dispose();
-			}
-
-			var data = _vm.ToSave().Serialize();
-
-			File.WriteAllBytes(filePath, data);
 		}
 
 		private void ClearHotKey() {

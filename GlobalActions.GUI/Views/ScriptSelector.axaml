@@ -19,9 +19,42 @@
             <ListBox Grid.Row="0"
                      Classes="UIListBox"
                      Margin="0,10"
-                     DoubleTapped="LoadScript"
                      Items="{Binding Scripts}"
-                     SelectedItem="{Binding SelectedScript}" />
+                     SelectedItem="{Binding SelectedScript}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="150,150"
+                              RowDefinitions="40,40">
+
+                            <Panel Grid.Row="0"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Name}"
+                                           TextAlignment="Center" />
+                            </Panel>
+
+                            <Panel Grid.Row="1"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Center">
+                                <Button Content="Load"
+                                        Command="{Binding LoadFromFile}"
+                                        CommandParameter="{Binding Name}" />
+                            </Panel>
+
+                            <CheckBox Grid.Row="0"
+                                      Grid.Column="1"
+                                      IsChecked="{Binding IsActive}"
+                                      Content="Is Active" />
+
+                            <Button Grid.Row="1"
+                                    Grid.Column="1"
+                                    Content="Remove"
+                                    Command="{Binding Remove}" />
+
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Grid Grid.Row="1"
                   ColumnDefinitions="60,*"
                   Margin="10"

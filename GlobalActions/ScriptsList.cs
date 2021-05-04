@@ -1,69 +1,119 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Avalonia.Collections;
 using GlobalActions.Models;
 
 namespace GlobalActions {
-	public class ScriptsList {
-		private static ScriptsList? _instance;
+    public class ScriptsList {
+        private static ScriptsList? _instance;
 
-		private readonly List<Script> _scripts = new();
+        public AvaloniaList<Script> Scripts = new();
 
-		private ScriptsList() { }
+        private ScriptsList() {
+        }
 
-		public static ScriptsList Instance => _instance ??= new ScriptsList();
+        public static ScriptsList Instance => _instance ??= new ScriptsList();
+        
+        public void LoadScripts() {
+            if (!Directory.Exists(Script.ScriptsDirectory)) {
+                Directory.CreateDirectory(Script.ScriptsDirectory);
+                return;
+            }
 
-		public void Add(string name) {
-			var script = _scripts.FirstOrDefault(x => x.Name == name)
-			             ?? new Script(name) {
-				             Id = _scripts.Count + 1,
-			             };
+            var files = Directory.GetFiles(Script.ScriptsDirectory)
+                .Select(file => Path.GetFileName(file)!)
+                .ToArray();
 
-			_scripts.Add(script);
-		}
+            foreach (var file in files) {
+                var script = Script.LoadFromFile(file);
 
-		public void Remove(string name) {
-			var script = GetScriptByName(name);
+                if (script != null) {
+                    Add(script);
+                }
+            }
+        }
 
-			_scripts.Remove(script);
-		}
+        public void Add(string name) {
+            if (Scripts.Any(x => x.Name == name)) return;
 
-		public bool ToggleActive(string name) {
-			var script = GetScriptByName(name);
+            var script = new Script(name) {
+                Id = Scripts.Count + 1,
+            };
 
-			script.IsActive = !script.IsActive;
+            Scripts.Add(script);
+        }
 
-			return script.IsActive;
-		}
+        public void Add(Script script) {
+            var storedScript = GetScriptByName(script.Name) ?? new Script(script.Name) {
+                Id = Scripts.Any() ? Scripts.Max(x => x.Id) + 1 : 1,
+            };
 
-		public void Toggle(int id) {
-			var script = GetScriptById(id);
-			script.Toggle();
-		}
+            storedScript.Mode = script.Mode;
+            storedScript.HotKey = script.HotKey;
+            storedScript.IsActive = script.IsActive;
+            storedScript.NodePipe = script.NodePipe;
+                
+            Scripts.Add(storedScript);
+        }
 
-		public void Edit(string name, Action<Script> edit) {
-			var script = GetScriptByName(name);
-			edit(script);
-		}
+        public void Remove(string name) {
+            var script = GetScriptByName(name);
 
-		private Script GetScriptByName(string name) {
-			var script = _scripts.FirstOrDefault(x => x.Name == name);
+            if (script == null) {
+                return;
+            }
 
-			if (script == null) {
-				throw new Exception();
-			}
+            Scripts.Remove(script);
+        }
 
-			return script;
-		}
+        public bool ToggleActive(string name) {
+            var script = GetScriptByName(name);
 
-		private Script GetScriptById(int id) {
-			var script = _scripts.FirstOrDefault(x => x.Id == id);
+            if (script == null) {
+                return false;
+            }
 
-			if (script == null) {
-				throw new Exception();
-			}
+            script.IsActive = !script.IsActive;
 
-			return script;
-		}
-	}
+            return script.IsActive;
+        }
+
+        public void Toggle(int id) {
+            var script = GetScriptById(id);
+            script.Toggle();
+        }
+
+        public void Edit(string name, Action<Script> edit) {
+            var script = GetScriptByName(name);
+            
+            if (script == null) {
+                return;
+            }
+
+            edit(script);
+            script.SaveToFile();
+        }
+
+        private Script? GetScriptByName(string name) {
+            var script = Scripts.FirstOrDefault(x => x.Name == name);
+
+            if (script == null) {
+                return null;
+            }
+
+            return script;
+        }
+
+        private Script GetScriptById(int id) {
+            var script = Scripts.FirstOrDefault(x => x.Id == id);
+
+            if (script == null) {
+                throw new Exception();
+            }
+
+            return script;
+        }
+    }
 }
