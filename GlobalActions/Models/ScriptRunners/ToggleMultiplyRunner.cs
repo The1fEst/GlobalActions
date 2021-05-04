@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GlobalActions.Models.Actions;
 
 namespace GlobalActions.Models.ScriptRunners {
+	[Serializable]
 	public class ToggleMultiplyRunner : IRunner {
 		public bool RunnerState { get; set; }
 
-		public void Run(List<Node> nodePipe) {
-			foreach (var node in nodePipe) {
+		public void Run(List<IAction> actionPipe) {
+			foreach (var action in actionPipe) {
 				if (!RunnerState) {
 					return;
 				}
 
-				node.Action.RunAction();
+				action.RunAction();
 			}
 		}
 
@@ -20,14 +22,14 @@ namespace GlobalActions.Models.ScriptRunners {
 			RunnerState = false;
 		}
 
-		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+		public void Toggle(List<IAction> actionPipe, HotKey hotKey) {
 			RunnerState = !RunnerState;
 
 			if (RunnerState) {
 				Task.Run(() => {
 					while (RunnerState) {
 						Console.WriteLine("here");
-						Run(nodePipe);
+						Run(actionPipe);
 					}
 
 					Stop();

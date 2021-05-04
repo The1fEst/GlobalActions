@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -10,10 +9,16 @@ using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem {
 	public class ScriptEditor : UserControl {
-		private ScriptEditorViewModel _vm;
+		private readonly ScriptEditorViewModel _vm;
 
 		public ScriptEditor() {
 			DataContext = _vm = new ScriptEditorViewModel();
+
+			InitializeComponent();
+		}
+
+		public ScriptEditor(ScriptEditorViewModel vm) {
+			DataContext = _vm = vm;
 
 			InitializeComponent();
 		}
@@ -37,7 +42,7 @@ namespace GlobalActions.GUI.NodeSystem {
 				script.Mode = _vm.Mode;
 				script.HotKey = _vm.HotKey;
 				script.IsActive = true;
-				script.NodePipe = _vm.Nodes.Select(node => node.ToNode()).ToList();
+				script.ActionPipe = _vm.Nodes.Select(node => node.ToAction()).ToList();
 			});
 		}
 
@@ -64,16 +69,8 @@ namespace GlobalActions.GUI.NodeSystem {
 				else {
 					_vm.HotKey.Key = key;
 				}
-
-				_vm.Keys = string.Empty;
-
-				if (_vm.HotKey.Modifiers.Any()) {
-					_vm.Keys = string.Join('+', _vm.HotKey.Modifiers.Select(x => (Keys) x)) + "+";
-				}
-
-				if (_vm.HotKey.Key != 0) {
-					_vm.Keys += (Keys) _vm.HotKey.Key;
-				}
+				
+				_vm.SetKeys();
 			};
 		}
 

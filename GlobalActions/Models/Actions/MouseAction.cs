@@ -4,14 +4,15 @@ using Avalonia.Input;
 using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models.Actions {
+	[Serializable]
 	public class MouseAction : IAction {
-		public int DelayBefore { get; set; }
-
-		public int DelayAfter { get; set; }
-
 		public MouseButton Key { get; set; }
 
 		public InputType InputType { get; set; }
+
+		public int DelayBefore { get; set; }
+
+		public int DelayAfter { get; set; }
 
 		public void RunAction() {
 			Thread.Sleep(DelayBefore);

@@ -1,7 +1,4 @@
 using System;
-using Avalonia.Collections;
-using Avalonia.Input;
-using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	[Serializable]

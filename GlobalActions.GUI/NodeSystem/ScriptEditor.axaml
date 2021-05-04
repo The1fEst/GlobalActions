@@ -42,6 +42,7 @@
 
                 <ListBox Grid.Row="0"
                          Classes="MainListBox"
+                         VirtualizationMode="None"
                          Items="{Binding AvailableNodes}"
                          SelectedItem="{Binding SelectedNode}" />
 
@@ -53,6 +54,7 @@
 
             <ListBox Grid.Column="1"
                      Classes="MainListBox"
+                     VirtualizationMode="None"
                      Items="{Binding Nodes}" />
 
         </Grid>

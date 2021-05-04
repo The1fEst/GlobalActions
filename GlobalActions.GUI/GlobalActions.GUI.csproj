@@ -60,6 +60,9 @@
       <Compile Update="NodeSystem\Nodes\TextNodeSave.cs">
         <DependentUpon>TextNode.axaml</DependentUpon>
       </Compile>
+      <Compile Update="NodeSystem\Nodes\RepeatNodeSave.cs">
+        <DependentUpon>RepeatNode.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />

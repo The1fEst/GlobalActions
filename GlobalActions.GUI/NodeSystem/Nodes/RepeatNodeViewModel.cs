@@ -1,33 +1,61 @@
 using System;
 using System.Linq;
 using Avalonia.Collections;
-using Avalonia.Input;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class RepeatNodeViewModel : ReactiveObject {
-		private uint _delayAfter;
+		private int _delayAfter;
 
-		private uint _delayBefore;
+		private int _delayBefore;
 
-		private Key _key = Key.None;
+		private int _repeatCount;
 
-		public uint DelayBefore {
+		private INode? _selectedNode;
+
+		private Type? _selectedNodeType;
+
+		public int DelayBefore {
 			get => _delayBefore;
 			set => this.RaiseAndSetIfChanged(ref _delayBefore, value);
 		}
 
-		public uint DelayAfter {
+		public int DelayAfter {
 			get => _delayAfter;
 			set => this.RaiseAndSetIfChanged(ref _delayAfter, value);
 		}
 
-		public AvaloniaList<Key> AvailableKeys =>
-			new(Enum.GetValues(typeof(Key)).Cast<Key>());
+		public int RepeatCount {
+			get => _repeatCount;
+			set => this.RaiseAndSetIfChanged(ref _repeatCount, value);
+		}
 
-		public Key Key {
-			get => _key;
-			set => this.RaiseAndSetIfChanged(ref _key, value);
+		public AvaloniaList<Type> AvailableNodes {
+			get {
+				var type = typeof(INode);
+				var list = new AvaloniaList<Type>(AppDomain.CurrentDomain.GetAssemblies()
+					.SelectMany(s => s.GetTypes())
+					.Where(p => type.IsAssignableFrom(p) && p.IsClass)
+					.Select(x => x));
+				return list;
+			}
+		}
+
+		public Type? SelectedNodeType {
+			get => _selectedNodeType;
+
+			set {
+				this.RaiseAndSetIfChanged(ref _selectedNodeType, value);
+
+				if (value != null) {
+					SelectedNode = (INode?) Activator.CreateInstance(value);
+				}
+			}
+		}
+
+		public INode? SelectedNode {
+			get => _selectedNode;
+			set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
 		}
 	}
 }

@@ -10,9 +10,9 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		private int _delayBefore;
 
-		private string _key = "";
-
 		private InputType _inputType;
+
+		private string _key = "";
 
 		public AvaloniaList<byte> Keys = new();
 

@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using GlobalActions.Models.Actions;
 
 namespace GlobalActions.Models.ScriptRunners {
+	[Serializable]
 	public class SingleRunner : IRunner {
 		public bool RunnerState { get; set; }
 
-		public void Run(List<Node> nodePipe) {
-			foreach (var node in nodePipe) {
-				node.Action.RunAction();
+		public void Run(List<IAction> actionPipe) {
+			foreach (var action in actionPipe) {
+				action.RunAction();
 			}
 		}
 
@@ -15,9 +17,9 @@ namespace GlobalActions.Models.ScriptRunners {
 			throw new NotImplementedException();
 		}
 
-		public void Toggle(List<Node> nodePipe, HotKey hotKey) {
+		public void Toggle(List<IAction> actionPipe, HotKey hotKey) {
 			Console.WriteLine("here");
-			Run(nodePipe);
+			Run(actionPipe);
 		}
 	}
 }

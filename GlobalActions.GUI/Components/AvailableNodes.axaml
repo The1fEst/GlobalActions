@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:GlobalActions.GUI.Components"
+             x:Class="GlobalActions.GUI.Components.AvailableNodes">
+
+    <UserControl.Styles>
+        <Style Selector="c|AvailableNodes">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ListBox Classes="MainListBox"
+                             VirtualizationMode="None"
+                             Items="{TemplateBinding Nodes}"
+                             SelectedItem="{TemplateBinding SelectedNode}" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+
+</UserControl>

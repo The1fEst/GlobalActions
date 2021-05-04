@@ -1,7 +1,7 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GlobalActions.Models;
+using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
 	public class RepeatNode : UserControl, INode {
@@ -16,7 +16,9 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			DataContext = _vm = new RepeatNodeViewModel {
 				DelayAfter = vm.DelayAfter,
 				DelayBefore = vm.DelayBefore,
-				Key = vm.Key,
+				RepeatCount = vm.RepeatCount,
+				SelectedNodeType = vm.SelectedNodeType,
+				SelectedNode = (INode?) vm.SelectedNode?.Clone(),
 			};
 
 			InitializeComponent();
@@ -26,12 +28,23 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			return new RepeatNode(_vm);
 		}
 
-		public Node ToNode() {
-			throw new NotImplementedException();
+		public IAction ToAction() {
+			return new RepeatAction {
+					DelayBefore = _vm.DelayBefore,
+					DelayAfter = _vm.DelayAfter,
+					RepeatCount = _vm.RepeatCount,
+					Action = _vm.SelectedNode?.ToAction(),
+			};
 		}
 
 		public INodeSave ToSave() {
-			throw new NotImplementedException();
+			return new RepeatNodeSave {
+				DelayAfter = _vm.DelayAfter,
+				DelayBefore = _vm.DelayBefore,
+				RepeatCount = _vm.RepeatCount,
+				SelectedNodeType = _vm.SelectedNodeType?.FullName,
+				SelectedNode = _vm.SelectedNode?.ToSave(),
+			};
 		}
 
 		private void InitializeComponent() {

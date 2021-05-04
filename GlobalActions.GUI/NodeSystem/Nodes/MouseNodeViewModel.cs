@@ -13,7 +13,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		private InputType _inputType;
 
-		MouseButton _key = MouseButton.None;
+		private MouseButton _key = MouseButton.None;
 
 		public int DelayBefore {
 			get => _delayBefore;

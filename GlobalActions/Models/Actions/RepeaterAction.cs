@@ -1,17 +1,25 @@
 using System;
+using System.Threading;
 
 namespace GlobalActions.Models.Actions {
-	public class RepeaterAction : IAction {
-		public int Count { get; set; }
+	[Serializable]
+	public class RepeatAction : IAction {
+		public int RepeatCount { get; set; }
 
-		public Node? Node { get; set; }
+		public IAction? Action { get; set; }
 
 		public int DelayBefore { get; set; }
 
 		public int DelayAfter { get; set; }
 
 		public void RunAction() {
-			throw new NotImplementedException();
+			Thread.Sleep(DelayBefore);
+
+			for (var i = 0; i < RepeatCount; i++) {
+				Action?.RunAction();
+			}
+
+			Thread.Sleep(DelayAfter);
 		}
 	}
 }

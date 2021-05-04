@@ -2,114 +2,116 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using GlobalActions.Models.Actions;
 using GlobalActions.Models.ScriptRunners;
 
 namespace GlobalActions.Models {
-    public class Script : ObservableModel {
-        public const string ScriptsDirectory = "Scripts";
+	[Serializable]
+	public class Script : ObservableModel {
+		public const string ScriptsDirectory = "Scripts";
 
-        private HotKey _hotKey = new();
+		private HotKey _hotKey = new();
 
-        private bool _isActive;
+		private bool _isActive;
 
-        private ScriptMode _mode;
+		private ScriptMode _mode;
 
-        private IRunner _scriptRunner = new SingleRunner();
+		private IRunner _scriptRunner = new SingleRunner();
 
-        public Script(string name) {
-            Name = name;
-        }
+		public Script(string name) {
+			Name = name;
+		}
 
-        public int Id { get; set; }
+		public int Id { get; set; }
 
-        public string Name { get; }
+		public string Name { get; }
 
-        public List<Node> NodePipe { get; set; }
+		public List<IAction> ActionPipe { get; set; } = new();
 
-        public HotKey HotKey {
-            get => _hotKey;
-            set => RaiseAndSet(ref _hotKey, value, ChangeHotKey);
-        }
+		public HotKey HotKey {
+			get => _hotKey;
+			set => RaiseAndSet(ref _hotKey, value, ChangeHotKey);
+		}
 
-        public ScriptMode Mode {
-            get => _mode;
-            set => RaiseAndSet(ref _mode, value, SelectRunner);
-        }
+		public ScriptMode Mode {
+			get => _mode;
+			set => RaiseAndSet(ref _mode, value, SelectRunner);
+		}
 
-        public bool IsActive {
-            get => _isActive;
-            set => RaiseAndSet(ref _isActive, value, ToggleActive);
-        }
+		public bool IsActive {
+			get => _isActive;
+			set => RaiseAndSet(ref _isActive, value, ToggleActive);
+		}
 
-        private void Remove() {
-        }
+		private void Remove() {
+			ScriptsList.Instance.Remove(Name);
+		}
 
-        private void ChangeHotKey() {
-            HotKeyHandler.UnregisterHotKey(Id);
-            HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
-        }
+		private void ChangeHotKey() {
+			HotKeyHandler.UnregisterHotKey(Id);
+			HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
+		}
 
-        private void ToggleActive() {
-            if (_isActive) {
-                HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
-            }
-            else {
-                HotKeyHandler.UnregisterHotKey(Id);
-            }
-        }
+		private void ToggleActive() {
+			if (_isActive) {
+				HotKeyHandler.RegisterHotKey(Id, Toggle, HotKey.Key, HotKey.Modifiers.ToArray());
+			}
+			else {
+				HotKeyHandler.UnregisterHotKey(Id);
+			}
+		}
 
-        public static Script? LoadFromFile(string name) {
-            if (!Directory.Exists(ScriptsDirectory)) {
-                Directory.CreateDirectory(ScriptsDirectory);
-                return null;
-            }
+		public static Script? LoadFromFile(string name) {
+			if (!Directory.Exists(ScriptsDirectory)) {
+				Directory.CreateDirectory(ScriptsDirectory);
+				return null;
+			}
 
-            var filePath = Path.Combine(ScriptsDirectory, name);
-            if (!File.Exists(filePath)) {
-                return null;
-            }
+			var filePath = Path.Combine(ScriptsDirectory, name);
+			if (!File.Exists(filePath)) {
+				return null;
+			}
 
-            var data = File.ReadAllBytes(filePath);
-            var script = data.Deserializer<Script>();
+			var data = File.ReadAllBytes(filePath);
+			var script = data.Deserializer<Script>();
 
-            return script;
-        }
+			return script;
+		}
 
-        
-        public void SaveToFile() {
-            if (!Directory.Exists(ScriptsDirectory)) {
-                Directory.CreateDirectory(ScriptsDirectory);
-            }
+		public void SaveToFile() {
+			if (!Directory.Exists(ScriptsDirectory)) {
+				Directory.CreateDirectory(ScriptsDirectory);
+			}
 
-            var filePath = Path.Combine(ScriptsDirectory, Name);
-            if (!File.Exists(filePath)) {
-                File.Create(filePath).Dispose();
-            }
+			var filePath = Path.Combine(ScriptsDirectory, Name);
+			if (!File.Exists(filePath)) {
+				File.Create(filePath).Dispose();
+			}
 
-            var data = new object().Serialize();// _vm.ToSave().Serialize();
+			var data = this.Serialize(); // _vm.ToSave().Serialize();
 
-            File.WriteAllBytes(filePath, data);
-        }
-        
-        public void Toggle() {
-            if (!NodePipe.Any() || !_isActive) {
-                return;
-            }
+			File.WriteAllBytes(filePath, data);
+		}
 
-            _scriptRunner.Toggle(NodePipe, HotKey);
-        }
+		public void Toggle() {
+			if (!ActionPipe.Any() || !_isActive) {
+				return;
+			}
 
-        private void SelectRunner() {
-            if (_scriptRunner is {RunnerState: true}) {
-                _scriptRunner.Stop();
-            }
+			_scriptRunner.Toggle(ActionPipe, HotKey);
+		}
 
-            _scriptRunner = Mode switch {
-                ScriptMode.Single => new SingleRunner(),
-                ScriptMode.HoldMultiply => new HoldMultiplyRunner(),
-                ScriptMode.ToggleMultiply => new ToggleMultiplyRunner(),
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-        }
-    }
+		private void SelectRunner() {
+			if (_scriptRunner is {RunnerState: true}) {
+				_scriptRunner.Stop();
+			}
+
+			_scriptRunner = Mode switch {
+				ScriptMode.Single => new SingleRunner(),
+				ScriptMode.HoldMultiply => new HoldMultiplyRunner(),
+				ScriptMode.ToggleMultiply => new ToggleMultiplyRunner(),
+				_ => throw new ArgumentOutOfRangeException(),
+			};
+		}
+	}
 }

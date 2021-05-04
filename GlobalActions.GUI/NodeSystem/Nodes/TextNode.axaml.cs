@@ -1,4 +1,3 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GlobalActions.Models;
@@ -27,13 +26,11 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			return new TextNode(_vm);
 		}
 
-		public Node ToNode() {
-			return new() {
-				Action = new TextAction {
+		public IAction ToAction() {
+			return new TextAction {
 					Text = _vm.Text,
 					DelayBefore = _vm.DelayBefore,
 					DelayAfter = _vm.DelayAfter,
-				},
 			};
 		}
 

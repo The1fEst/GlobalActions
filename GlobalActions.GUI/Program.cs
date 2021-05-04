@@ -3,7 +3,6 @@ using Avalonia.ReactiveUI;
 
 namespace GlobalActions.GUI {
 	internal class Program {
-
 		public static void Main(string[] args) {
 			try {
 				InterceptKeys.Run();

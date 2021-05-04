@@ -1,23 +1,37 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:nodes="clr-namespace:GlobalActions.GUI.NodeSystem.Nodes"
              xmlns:c="clr-namespace:GlobalActions.GUI.Components"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GlobalActions.GUI.NodeSystem.Nodes.RepeatNode">
 
     <Design.DataContext>
         <nodes:RepeatNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*">
-        
-        <TextBlock Grid.Row="0"
-                   TextAlignment="Center">
+    <StackPanel>
+
+        <TextBlock TextAlignment="Center">
             Repeat
         </TextBlock>
 
+        <c:NamedField LabelWidth="100"
+                      Label="Delay before">
+            <TextBox Text="{Binding DelayBefore}" />
+        </c:NamedField>
 
-    </Grid>
+        <c:NamedField Label="Delay after">
+            <TextBox Text="{Binding DelayAfter}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Repeat count">
+            <TextBox Text="{Binding RepeatCount}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Node">
+            <ComboBox Items="{Binding AvailableNodes}"
+                      SelectedItem="{Binding SelectedNodeType}" />
+        </c:NamedField>
+
+        <ContentControl Content="{Binding SelectedNode}" />
+    </StackPanel>
 </UserControl>

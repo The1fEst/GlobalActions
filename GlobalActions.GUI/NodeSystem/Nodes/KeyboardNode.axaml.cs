@@ -26,7 +26,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 				DelayAfter = vm.DelayAfter,
 				DelayBefore = vm.DelayBefore,
 				Keys = vm.Keys,
-				Key = vm.Key,
+				Key = string.Join('+', vm.Keys.Select(x => (Keys) x)),
 				InputType = vm.InputType,
 			};
 
@@ -37,14 +37,12 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			return new KeyboardNode(_vm);
 		}
 
-		public Node ToNode() {
-			return new() {
-				Action = new KeyboardAction {
+		public IAction ToAction() {
+			return new KeyboardAction {
 					Keys = _vm.Keys.ToList(),
 					InputType = _vm.InputType,
 					DelayBefore = _vm.DelayBefore,
 					DelayAfter = _vm.DelayAfter,
-				},
 			};
 		}
 

@@ -39,7 +39,20 @@ namespace GlobalActions.GUI.NodeSystem {
 
 		public HotKey HotKey {
 			get => _hotKey;
+
 			set => this.RaiseAndSetIfChanged(ref _hotKey, value);
+		}
+
+		public void SetKeys() {
+			Keys = string.Empty;
+
+			if (HotKey.Modifiers.Any()) {
+				Keys = string.Join('+', HotKey.Modifiers.Select(x => (Keys) x)) + "+";
+			}
+
+			if (HotKey.Key != 0) {
+				Keys += (Keys) HotKey.Key;
+			}
 		}
 
 		public AvaloniaList<INode> AvailableNodes {

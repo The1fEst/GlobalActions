@@ -4,8 +4,9 @@ using System.Threading;
 using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models.Actions {
+	[Serializable]
 	public class KeyboardAction : IAction {
-		public List<byte> Keys { get; set; }
+		public List<byte> Keys { get; set; } = new();
 
 		public InputType InputType { get; set; }
 

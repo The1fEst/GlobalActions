@@ -2,9 +2,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Input.Platform;
 
 namespace GlobalActions.Models.Actions {
+	[Serializable]
 	public class TextAction : IAction {
 		public string Text { get; set; } = "";
 
@@ -17,10 +17,10 @@ namespace GlobalActions.Models.Actions {
 
 			Task.Run(async () => {
 				await Application.Current.Clipboard.SetTextAsync(Text);
-				
-				var ctrl = (byte) Keys.LControlKey;
-				var v = (byte) Keys.V;
-				
+
+				const byte ctrl = (byte) Keys.LControlKey;
+				const byte v = (byte) Keys.V;
+
 				Win32Interop.keybd_event(ctrl, ctrl, 0, 0);
 				Win32Interop.keybd_event(v, v, 0, 0);
 				Win32Interop.keybd_event(v, v, Win32Interop.KEYEVENTF.KEYEVENTF_KEYUP, 0);

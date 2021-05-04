@@ -22,5 +22,9 @@ namespace GlobalActions.GUI.Views {
 			get => _selectedScript;
 			set => this.RaiseAndSetIfChanged(ref _selectedScript, value);
 		}
+
+		public void SetItem() {
+			
+		}
 	}
 }
