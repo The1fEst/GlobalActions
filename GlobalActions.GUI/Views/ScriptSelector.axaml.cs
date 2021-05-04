@@ -1,4 +1,5 @@
 using System.Linq;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -35,7 +36,7 @@ namespace GlobalActions.GUI.Views {
 			var button = (Button) sender!;
 			var text = (TextBlock) button.Parent.Parent.VisualChildren[0].VisualChildren[0];
 			var name = text.Text;
-			
+
 			var script = ScriptsList.Instance.Scripts.FirstOrDefault(x => x.Name == name);
 
 			if (script == null) {
@@ -45,11 +46,11 @@ namespace GlobalActions.GUI.Views {
 			var control = this.FindControl<Panel>("ScriptEditor");
 			control.Children.Clear();
 
-			var vm = new ScriptEditorViewModel() {
+			var vm = new ScriptEditorViewModel {
 				Mode = script.Mode,
 				HotKey = script.HotKey,
 				Name = script.Name,
-				Nodes = new(script.ActionPipe.Select(x => x.FromAction())),
+				Nodes = new AvaloniaList<INode>(script.ActionPipe.Select(x => x.FromAction())),
 			};
 
 			vm.SetKeys();

@@ -43,18 +43,6 @@ namespace GlobalActions.GUI.NodeSystem {
 			set => this.RaiseAndSetIfChanged(ref _hotKey, value);
 		}
 
-		public void SetKeys() {
-			Keys = string.Empty;
-
-			if (HotKey.Modifiers.Any()) {
-				Keys = string.Join('+', HotKey.Modifiers.Select(x => (Keys) x)) + "+";
-			}
-
-			if (HotKey.Key != 0) {
-				Keys += (Keys) HotKey.Key;
-			}
-		}
-
 		public AvaloniaList<INode> AvailableNodes {
 			get {
 				var type = typeof(INode);
@@ -77,6 +65,18 @@ namespace GlobalActions.GUI.NodeSystem {
 		}
 
 		public bool IsActive { get; set; }
+
+		public void SetKeys() {
+			Keys = string.Empty;
+
+			if (HotKey.Modifiers.Any()) {
+				Keys = string.Join('+', HotKey.Modifiers.Select(x => (Keys) x)) + "+";
+			}
+
+			if (HotKey.Key != 0) {
+				Keys += (Keys) HotKey.Key;
+			}
+		}
 
 		public ScriptSave ToSave() {
 			return new(Nodes

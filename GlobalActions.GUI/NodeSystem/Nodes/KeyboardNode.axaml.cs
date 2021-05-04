@@ -39,10 +39,10 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		public IAction ToAction() {
 			return new KeyboardAction {
-					Keys = _vm.Keys.ToList(),
-					InputType = _vm.InputType,
-					DelayBefore = _vm.DelayBefore,
-					DelayAfter = _vm.DelayAfter,
+				Keys = _vm.Keys.ToList(),
+				InputType = _vm.InputType,
+				DelayBefore = _vm.DelayBefore,
+				DelayAfter = _vm.DelayAfter,
 			};
 		}
 

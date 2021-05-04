@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using GlobalActions.Models;
 using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
@@ -28,11 +27,11 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		public IAction ToAction() {
 			return new MouseAction {
-					Key = _vm.Key,
-					InputType = _vm.InputType,
-					DelayBefore = _vm.DelayBefore,
-					DelayAfter = _vm.DelayAfter,
-				};
+				Key = _vm.Key,
+				InputType = _vm.InputType,
+				DelayBefore = _vm.DelayBefore,
+				DelayAfter = _vm.DelayAfter,
+			};
 		}
 
 		public INodeSave ToSave() {

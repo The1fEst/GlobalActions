@@ -69,7 +69,7 @@ namespace GlobalActions.GUI.NodeSystem {
 				else {
 					_vm.HotKey.Key = key;
 				}
-				
+
 				_vm.SetKeys();
 			};
 		}

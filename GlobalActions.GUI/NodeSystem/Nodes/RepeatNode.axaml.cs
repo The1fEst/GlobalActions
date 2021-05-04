@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using GlobalActions.Models;
 using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
@@ -30,10 +29,10 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
 		public IAction ToAction() {
 			return new RepeatAction {
-					DelayBefore = _vm.DelayBefore,
-					DelayAfter = _vm.DelayAfter,
-					RepeatCount = _vm.RepeatCount,
-					Action = _vm.SelectedNode?.ToAction(),
+				DelayBefore = _vm.DelayBefore,
+				DelayAfter = _vm.DelayAfter,
+				RepeatCount = _vm.RepeatCount,
+				Action = _vm.SelectedNode?.ToAction(),
 			};
 		}
 
