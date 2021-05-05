@@ -46,6 +46,13 @@
       <Compile Update="Views\ScriptSelectorViewModel.cs">
         <DependentUpon>ScriptSelector.axaml</DependentUpon>
       </Compile>
+      <Compile Update="NodeSystem\Nodes\MouseMoveNode.axaml.cs">
+        <DependentUpon>MouseMoveNode.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="NodeSystem\Nodes\MouseMoveNodeViewModel.cs">
+        <DependentUpon>MouseMoveNode.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />

@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:nodes="clr-namespace:GlobalActions.GUI.NodeSystem.Nodes"
+             xmlns:c="clr-namespace:GlobalActions.GUI.Components"
+             x:Class="GlobalActions.GUI.NodeSystem.Nodes.MouseMoveNode">
+
+    <Design.DataContext>
+        <nodes:MouseMoveNodeViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+
+        <TextBlock TextAlignment="Center">
+            Mouse move
+        </TextBlock>
+
+        <c:NamedField LabelWidth="100"
+                      Label="Delay before">
+            <TextBox Text="{Binding DelayBefore}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Delay after">
+            <TextBox Text="{Binding DelayAfter}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Move type">
+            <ComboBox Items="{Binding MouseMoveTypes}"
+                      Width="150"
+                      SelectedItem="{Binding MouseMoveType}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Horizontal move">
+            <TextBox Text="{Binding Horizontal}" />
+        </c:NamedField>
+
+        <c:NamedField Label="Vertical move">
+            <TextBox Text="{Binding Vertical}" />
+        </c:NamedField>
+
+    </StackPanel>
+
+</UserControl>
