@@ -36,16 +36,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			};
 		}
 
-		public INodeSave ToSave() {
-			return new RepeatNodeSave {
-				DelayAfter = _vm.DelayAfter,
-				DelayBefore = _vm.DelayBefore,
-				RepeatCount = _vm.RepeatCount,
-				SelectedNodeType = _vm.SelectedNodeType?.FullName,
-				SelectedNode = _vm.SelectedNode?.ToSave(),
-			};
-		}
-
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
 		}

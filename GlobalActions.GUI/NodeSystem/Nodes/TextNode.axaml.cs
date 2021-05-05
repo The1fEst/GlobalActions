@@ -33,14 +33,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			};
 		}
 
-		public INodeSave ToSave() {
-			return new TextNodeSave {
-				DelayAfter = _vm.DelayAfter,
-				DelayBefore = _vm.DelayBefore,
-				Text = _vm.Text,
-			};
-		}
-
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
 		}

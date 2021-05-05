@@ -48,21 +48,6 @@
       <Compile Update="Views\ScriptSelectorViewModel.cs">
         <DependentUpon>ScriptSelector.axaml</DependentUpon>
       </Compile>
-      <Compile Update="NodeSystem\Nodes\KeyboardNodeSave.cs">
-        <DependentUpon>KeyboardNode.axaml</DependentUpon>
-      </Compile>
-      <Compile Update="NodeSystem\Nodes\INodeSave.cs">
-        <DependentUpon>INode.cs</DependentUpon>
-      </Compile>
-      <Compile Update="NodeSystem\Nodes\MouseNodeSave.cs">
-        <DependentUpon>MouseNode.axaml</DependentUpon>
-      </Compile>
-      <Compile Update="NodeSystem\Nodes\TextNodeSave.cs">
-        <DependentUpon>TextNode.axaml</DependentUpon>
-      </Compile>
-      <Compile Update="NodeSystem\Nodes\RepeatNodeSave.cs">
-        <DependentUpon>RepeatNode.axaml</DependentUpon>
-      </Compile>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />

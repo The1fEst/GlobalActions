@@ -46,16 +46,6 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 			};
 		}
 
-		public INodeSave ToSave() {
-			return new KeyboardNodeSave {
-				DelayAfter = _vm.DelayAfter,
-				DelayBefore = _vm.DelayBefore,
-				Key = _vm.Key,
-				InputType = _vm.InputType,
-				Keys = _vm.Keys.ToArray(),
-			};
-		}
-
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
 		}

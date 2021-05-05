@@ -77,46 +77,5 @@ namespace GlobalActions.GUI.NodeSystem {
 				Keys += (Keys) HotKey.Key;
 			}
 		}
-
-		public ScriptSave ToSave() {
-			return new(Nodes
-					.Select(node => node.ToSave())
-					.ToArray(),
-				HotKey,
-				Keys,
-				Mode,
-				Name);
-		}
-
-		public static ScriptEditorViewModel FromSave(ScriptSave script) {
-			return new() {
-				HotKey = script.Key,
-				Keys = script.Keys,
-				Mode = script.Mode,
-				Name = script.Name,
-				Nodes = new AvaloniaList<INode>(script.Nodes.Select(node => node.FromSave())),
-			};
-		}
-	}
-
-	[Serializable]
-	public class ScriptSave {
-		public ScriptSave(INodeSave[] nodes, HotKey key, string keys, ScriptMode mode, string name) {
-			Nodes = nodes;
-			Key = key;
-			Keys = keys;
-			Mode = mode;
-			Name = name;
-		}
-
-		public INodeSave[] Nodes { get; set; }
-
-		public HotKey Key { get; set; }
-
-		public string Keys { get; set; }
-
-		public ScriptMode Mode { get; set; }
-
-		public string Name { get; set; }
 	}
 }
