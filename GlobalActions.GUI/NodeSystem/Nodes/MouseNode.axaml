@@ -18,14 +18,12 @@
         <c:NamedField Grid.Row="1"
                       LabelWidth="100"
                       Label="Delay before">
-            <TextBox Width="150"
-                     Text="{Binding DelayBefore}" />
+            <TextBox Text="{Binding DelayBefore}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="2"
                       Label="Delay after">
-            <TextBox Width="150"
-                     Text="{Binding DelayAfter}" />
+            <TextBox Text="{Binding DelayAfter}" />
         </c:NamedField>
 
         <c:NamedField Grid.Row="3"

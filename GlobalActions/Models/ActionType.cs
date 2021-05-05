@@ -1,13 +1,13 @@
 namespace GlobalActions.Models {
-	public enum ActionType {
-		Keyboard,
+  public enum ActionType {
+    Keyboard,
 
-		Mouse,
+    Mouse,
 
-		Text,
+    Text,
 
-		Repeater,
+    Repeater,
 
-		Delay,
-	}
+    Delay,
+  }
 }
