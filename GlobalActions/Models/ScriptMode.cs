@@ -1,9 +1,9 @@
 namespace GlobalActions.Models {
-  public enum ScriptMode {
-    Single,
+	public enum ScriptMode {
+		Single,
 
-    HoldMultiply,
+		HoldMultiply,
 
-    ToggleMultiply,
-  }
+		ToggleMultiply,
+	}
 }

@@ -1,9 +1,9 @@
 namespace GlobalActions.Models {
-  public enum InputType {
-    Down,
+	public enum InputType {
+		Down,
 
-    Up,
+		Up,
 
-    Press,
-  }
+		Press,
+	}
 }

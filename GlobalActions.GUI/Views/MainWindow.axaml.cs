@@ -3,16 +3,16 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace GlobalActions.GUI.Views {
-  public class MainWindow : Window {
-    public MainWindow() {
-      InitializeComponent();
+	public class MainWindow : Window {
+		public MainWindow() {
+			InitializeComponent();
 #if DEBUG
-      this.AttachDevTools();
+			this.AttachDevTools();
 #endif
-    }
+		}
 
-    private void InitializeComponent() {
-      AvaloniaXamlLoader.Load(this);
-    }
-  }
+		private void InitializeComponent() {
+			AvaloniaXamlLoader.Load(this);
+		}
+	}
 }

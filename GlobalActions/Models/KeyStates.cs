@@ -1,11 +1,11 @@
 namespace GlobalActions.Models {
-  public enum KeyStates {
-    None,
+	public enum KeyStates {
+		None,
 
-    Down,
+		Down,
 
-    Hold,
+		Hold,
 
-    Release,
-  }
+		Release,
+	}
 }
