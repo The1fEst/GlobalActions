@@ -3,14 +3,13 @@ using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models.Actions {
   public class MouseMoveAction : IAction {
-    public int DelayBefore { get; set; }
-    public int DelayAfter { get; set; }
-
     public int Horizontal { get; set; }
 
     public int Vertical { get; set; }
 
     public MouseMoveType? MouseMoveType { get; set; }
+    public int DelayBefore { get; set; }
+    public int DelayAfter { get; set; }
 
     public void RunAction() {
       Thread.Sleep(DelayBefore);

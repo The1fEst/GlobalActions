@@ -29,7 +29,14 @@
 
         <c:NamedField Label="Node">
             <ComboBox Items="{Binding AvailableNodes}"
-                      SelectedItem="{Binding SelectedNodeType}" />
+
+                      SelectedItem="{Binding SelectedNodeType}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </c:NamedField>
 
         <ContentControl Content="{Binding SelectedNode}" />

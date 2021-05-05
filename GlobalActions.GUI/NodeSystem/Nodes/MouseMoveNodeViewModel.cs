@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Avalonia.Collections;
-using Avalonia.Input;
 using GlobalActions.Models;
 using ReactiveUI;
 
@@ -11,7 +10,11 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
     private int _delayBefore;
 
+    private int _horizontal;
+
     private MouseMoveType? _mouseMoveType;
+
+    private int _vertical;
 
     public int DelayBefore {
       get => _delayBefore;
@@ -31,14 +34,10 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
       set => this.RaiseAndSetIfChanged(ref _mouseMoveType, value);
     }
 
-    private int _horizontal;
-
     public int Horizontal {
       get => _horizontal;
       set => this.RaiseAndSetIfChanged(ref _horizontal, value);
     }
-
-    private int _vertical;
 
     public int Vertical {
       get => _vertical;
