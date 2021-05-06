@@ -1,7 +1,7 @@
 namespace GlobalActions.Models {
-	public enum MouseMoveType {
-		Absolute,
+  public enum MouseMoveType {
+    Absolute,
 
-		Relative,
-	}
+    Relative,
+  }
 }

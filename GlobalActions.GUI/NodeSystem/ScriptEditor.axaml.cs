@@ -10,84 +10,84 @@ using GlobalActions.GUI.NodeSystem.Nodes;
 using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem {
-	public class ScriptEditor : UserControl {
-		private static ScriptEditor? _instance;
+  public class ScriptEditor : UserControl {
+    private static ScriptEditor? _instance;
 
-		private readonly ScriptEditorViewModel _vm;
+    private readonly ScriptEditorViewModel _vm;
 
-		public ScriptEditor() {
-			DataContext = _vm = new ScriptEditorViewModel();
-			InitializeComponent();
+    public ScriptEditor() {
+      DataContext = _vm = new ScriptEditorViewModel();
+      InitializeComponent();
 
-			_instance ??= this;
-		}
+      _instance ??= this;
+    }
 
-		public static ScriptEditor Instance => _instance ??= new ScriptEditor();
+    public static ScriptEditor Instance => _instance ??= new ScriptEditor();
 
-		private void InitializeComponent() {
-			AvaloniaXamlLoader.Load(this);
-		}
+    private void InitializeComponent() {
+      AvaloniaXamlLoader.Load(this);
+    }
 
-		private void AppendNode(object? sender, RoutedEventArgs e) {
-			if (_vm.SelectedNode != null) {
-				_vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
-			}
-		}
+    private void AppendNode(object? sender, RoutedEventArgs e) {
+      if (_vm.SelectedNode != null) {
+        _vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
+      }
+    }
 
-		public void Load(Script script) {
-			_vm.Mode = script.Mode;
-			_vm.HotKey = script.HotKey;
-			_vm.Name = script.Name;
-			_vm.Nodes = new AvaloniaList<INode>(script.ActionPipe.Select(x => x.FromAction()));
+    public void Load(Script script) {
+      _vm.Mode = script.Mode;
+      _vm.HotKey = script.HotKey;
+      _vm.Name = script.Name;
+      _vm.Nodes = new AvaloniaList<INode>(script.ActionPipe.Select(x => x.FromAction()));
 
-			_vm.SetKeys();
-		}
+      _vm.SetKeys();
+    }
 
-		private void Save(object? sender, RoutedEventArgs e) {
-			var scriptsList = ScriptsList.Instance;
+    private void Save(object? sender, RoutedEventArgs e) {
+      var scriptsList = ScriptsList.Instance;
 
-			scriptsList.Add(_vm.Name);
-			scriptsList.Edit(_vm.Name, script => {
-				script.Mode = _vm.Mode;
-				script.HotKey = _vm.HotKey;
-				script.ActionPipe = _vm.Nodes.Select(node => node.ToAction()).ToList();
-			});
-		}
+      scriptsList.Add(_vm.Name);
+      scriptsList.Edit(_vm.Name, script => {
+        script.Mode = _vm.Mode;
+        script.HotKey = _vm.HotKey;
+        script.ActionPipe = _vm.Nodes.Select(node => node.ToAction()).ToList();
+      });
+    }
 
-		private void ClearHotKey() {
-			_vm.Keys = Keys.None.ToString();
-			_vm.HotKey.Key = 0;
-			_vm.HotKey.Modifiers = new List<int>();
-		}
+    private void ClearHotKey() {
+      _vm.Keys = Keys.None.ToString();
+      _vm.HotKey.Key = 0;
+      _vm.HotKey.Modifiers = new List<int>();
+    }
 
-		private void OnGotFocus(object? sender, GotFocusEventArgs e) {
-			InterceptKeys.Run();
-			_vm.HotKey = new HotKey();
+    private void OnGotFocus(object? sender, GotFocusEventArgs e) {
+      InterceptKeys.Run();
+      _vm.HotKey = new HotKey();
 
-			InterceptKeys.KeyDown += key => {
-				if (key == (int) Keys.Delete) {
-					ClearHotKey();
-					return;
-				}
+      InterceptKeys.KeyDown += key => {
+        if (key == (int) Keys.Delete) {
+          ClearHotKey();
+          return;
+        }
 
-				if (KeyState.DefaultModifiers.Contains(key)
-				    && _vm.HotKey.Modifiers.All(x => x != key)) {
-					_vm.HotKey.Modifiers.Add(key);
-				} else if (!KeyState.DefaultModifiers.Contains(key)) {
-					_vm.HotKey.Key = key;
-				}
+        if (KeyState.DefaultModifiers.Contains(key)
+            && _vm.HotKey.Modifiers.All(x => x != key)) {
+          _vm.HotKey.Modifiers.Add(key);
+        } else if (!KeyState.DefaultModifiers.Contains(key)) {
+          _vm.HotKey.Key = key;
+        }
 
-				_vm.SetKeys();
-			};
-		}
+        _vm.SetKeys();
+      };
+    }
 
-		private void OnLostFocus(object? sender, RoutedEventArgs e) {
-			InterceptKeys.Stop();
-			InterceptKeys.KeyDown = null;
+    private void OnLostFocus(object? sender, RoutedEventArgs e) {
+      InterceptKeys.Stop();
+      InterceptKeys.KeyDown = null;
 
-			if (_vm.HotKey.Key == 0) {
-				ClearHotKey();
-			}
-		}
-	}
+      if (_vm.HotKey.Key == 0) {
+        ClearHotKey();
+      }
+    }
+  }
 }

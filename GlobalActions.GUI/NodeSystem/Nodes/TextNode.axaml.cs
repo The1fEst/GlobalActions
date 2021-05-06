@@ -3,38 +3,38 @@ using Avalonia.Markup.Xaml;
 using GlobalActions.Models.Actions;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
-	public class TextNode : UserControl, INode {
-		private readonly TextNodeViewModel _vm;
+  public class TextNode : UserControl, INode {
+    private readonly TextNodeViewModel _vm;
 
-		public TextNode() {
-			DataContext = _vm = new TextNodeViewModel();
-			InitializeComponent();
-		}
+    public TextNode() {
+      DataContext = _vm = new TextNodeViewModel();
+      InitializeComponent();
+    }
 
-		public TextNode(TextNodeViewModel vm) {
-			DataContext = _vm = new TextNodeViewModel {
-				DelayAfter = vm.DelayAfter,
-				DelayBefore = vm.DelayBefore,
-				Text = vm.Text,
-			};
+    public TextNode(TextNodeViewModel vm) {
+      DataContext = _vm = new TextNodeViewModel {
+        DelayAfter = vm.DelayAfter,
+        DelayBefore = vm.DelayBefore,
+        Text = vm.Text,
+      };
 
-			InitializeComponent();
-		}
+      InitializeComponent();
+    }
 
-		public object Clone() {
-			return new TextNode(_vm);
-		}
+    public object Clone() {
+      return new TextNode(_vm);
+    }
 
-		public IAction ToAction() {
-			return new TextAction {
-				Text = _vm.Text,
-				DelayBefore = _vm.DelayBefore,
-				DelayAfter = _vm.DelayAfter,
-			};
-		}
+    public IAction ToAction() {
+      return new TextAction {
+        Text = _vm.Text,
+        DelayBefore = _vm.DelayBefore,
+        DelayAfter = _vm.DelayAfter,
+      };
+    }
 
-		private void InitializeComponent() {
-			AvaloniaXamlLoader.Load(this);
-		}
-	}
+    private void InitializeComponent() {
+      AvaloniaXamlLoader.Load(this);
+    }
+  }
 }
