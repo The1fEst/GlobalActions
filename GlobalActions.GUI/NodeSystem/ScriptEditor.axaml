@@ -54,7 +54,6 @@
 
             <ListBox Grid.Column="1"
                      Classes="MainListBox"
-                     VirtualizationMode="None"
                      Items="{Binding Nodes}" />
 
         </Grid>

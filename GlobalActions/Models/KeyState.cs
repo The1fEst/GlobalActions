@@ -3,6 +3,8 @@ using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models {
 	public class KeyState {
+		public static readonly int[] DefaultModifiers = { 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5 };
+
 		private readonly int[] _modifiers;
 
 		protected KeyState(int key, params int[] modifiers) {
@@ -17,9 +19,13 @@ namespace GlobalActions.Models {
 		private bool State { get; set; }
 
 		public bool ModifiersIsDown() {
-			return _modifiers.Select(x =>
-					GetAsyncKeyState(x) != 0)
-				.All(x => x);
+			return _modifiers.Any()
+				? _modifiers.Select(x =>
+						GetAsyncKeyState(x) != 0)
+					.All(x => x)
+				: DefaultModifiers.Select(x =>
+						GetAsyncKeyState(x) != 0)
+					.All(x => !x);
 		}
 
 		public KeyStates GetKeyState(WM state) {

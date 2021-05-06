@@ -1,12 +1,12 @@
+using System.Linq;
 using Avalonia.Collections;
+using GlobalActions.GUI.NodeSystem;
 using GlobalActions.Models;
 using ReactiveUI;
 
 namespace GlobalActions.GUI.Views {
 	public class ScriptSelectorViewModel : ReactiveObject {
 		private string _name = "";
-
-		private Script? _selectedScript;
 
 		public AvaloniaList<Script> Scripts {
 			get => ScriptsList.Instance.Scripts;
@@ -19,8 +19,16 @@ namespace GlobalActions.GUI.Views {
 		}
 
 		public Script? SelectedScript {
-			get => _selectedScript;
-			set => this.RaiseAndSetIfChanged(ref _selectedScript, value);
+			get => ScriptsList.Instance.SelectedScript;
+			set => this.RaiseAndSetIfChanged(ref ScriptsList.Instance.SelectedScript, value);
+		}
+
+		public void Load(string name) {
+			SelectedScript = ScriptsList.Instance.Scripts.FirstOrDefault(script => script.Name == name);
+
+			if (SelectedScript != null) {
+				ScriptEditor.Instance.Load(SelectedScript);
+			}
 		}
 	}
 }

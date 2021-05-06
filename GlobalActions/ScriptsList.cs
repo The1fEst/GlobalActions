@@ -10,6 +10,8 @@ namespace GlobalActions {
 
 		public AvaloniaList<Script> Scripts = new();
 
+		public Script? SelectedScript;
+
 		private ScriptsList() { }
 
 		public static ScriptsList Instance => _instance ??= new ScriptsList();

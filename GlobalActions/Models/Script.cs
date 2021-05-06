@@ -43,6 +43,10 @@ namespace GlobalActions.Models {
 			set => RaiseAndSet(ref _isActive, value, ToggleActive);
 		}
 
+		private void Load() {
+			ScriptsList.Instance.SelectedScript = this;
+		}
+
 		private void Remove() {
 			ScriptsList.Instance.Remove(Name);
 		}

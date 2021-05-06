@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace GlobalActions {
-	public class Win32Interop {
+	public static class Win32Interop {
 		public delegate IntPtr LowLevelKeyboardProc(
 			int nCode, IntPtr wParam, IntPtr lParam);
 

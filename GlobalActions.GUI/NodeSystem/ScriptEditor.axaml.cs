@@ -1,27 +1,28 @@
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using GlobalActions.GUI.Extensions;
 using GlobalActions.GUI.NodeSystem.Nodes;
 using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem {
 	public class ScriptEditor : UserControl {
+		private static ScriptEditor? _instance;
+
 		private readonly ScriptEditorViewModel _vm;
 
 		public ScriptEditor() {
 			DataContext = _vm = new ScriptEditorViewModel();
-
 			InitializeComponent();
+
+			_instance ??= this;
 		}
 
-		public ScriptEditor(ScriptEditorViewModel vm) {
-			DataContext = _vm = vm;
-
-			InitializeComponent();
-		}
+		public static ScriptEditor Instance => _instance ??= new ScriptEditor();
 
 		private void InitializeComponent() {
 			AvaloniaXamlLoader.Load(this);
@@ -31,6 +32,15 @@ namespace GlobalActions.GUI.NodeSystem {
 			if (_vm.SelectedNode != null) {
 				_vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
 			}
+		}
+
+		public void Load(Script script) {
+			_vm.Mode = script.Mode;
+			_vm.HotKey = script.HotKey;
+			_vm.Name = script.Name;
+			_vm.Nodes = new AvaloniaList<INode>(script.ActionPipe.Select(x => x.FromAction()));
+
+			_vm.SetKeys();
 		}
 
 		private void Save(object? sender, RoutedEventArgs e) {
@@ -60,10 +70,10 @@ namespace GlobalActions.GUI.NodeSystem {
 					return;
 				}
 
-				if ((Keys) key is Keys.LShiftKey or Keys.LControlKey or Keys.LMenu
+				if (KeyState.DefaultModifiers.Contains(key)
 				    && _vm.HotKey.Modifiers.All(x => x != key)) {
 					_vm.HotKey.Modifiers.Add(key);
-				} else {
+				} else if (!KeyState.DefaultModifiers.Contains(key)) {
 					_vm.HotKey.Key = key;
 				}
 

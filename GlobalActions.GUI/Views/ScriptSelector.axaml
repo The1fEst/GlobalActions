@@ -27,6 +27,7 @@
         <Grid Grid.Column="0"
               RowDefinitions="*,50">
             <ListBox Grid.Row="0"
+                     Name="ScriptList"
                      Classes="UIListBox"
                      Margin="0,10"
                      Items="{Binding Scripts}"
@@ -47,7 +48,8 @@
                                    Grid.Column="0"
                                    HorizontalAlignment="Center">
                                 <Button Content="Load"
-                                        Click="Load" />
+                                        Command="{Binding ElementName=ScriptList, Path=DataContext.Load}"
+                                        CommandParameter="{Binding Name}" />
                             </Panel>
 
                             <CheckBox Grid.Row="0"
@@ -78,11 +80,8 @@
             </Grid>
         </Grid>
 
-        <Panel Grid.Column="1"
-               Margin="20,0"
-               Name="ScriptEditor">
-            <nodeSystem:ScriptEditor />
-        </Panel>
+        <nodeSystem:ScriptEditor Grid.Column="1"
+                                 Margin="20,0" />
 
     </Grid>
 
