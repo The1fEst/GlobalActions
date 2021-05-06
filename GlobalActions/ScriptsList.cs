@@ -67,24 +67,8 @@ namespace GlobalActions {
 				return;
 			}
 
+			script.IsActive = false;
 			Scripts.Remove(script);
-		}
-
-		public bool ToggleActive(string name) {
-			var script = GetScriptByName(name);
-
-			if (script == null) {
-				return false;
-			}
-
-			script.IsActive = !script.IsActive;
-
-			return script.IsActive;
-		}
-
-		public void Toggle(int id) {
-			var script = GetScriptById(id);
-			script.Toggle();
 		}
 
 		public void Edit(string name, Action<Script> edit) {
@@ -100,20 +84,6 @@ namespace GlobalActions {
 
 		private Script? GetScriptByName(string name) {
 			var script = Scripts.FirstOrDefault(x => x.Name == name);
-
-			if (script == null) {
-				return null;
-			}
-
-			return script;
-		}
-
-		private Script GetScriptById(int id) {
-			var script = Scripts.FirstOrDefault(x => x.Id == id);
-
-			if (script == null) {
-				throw new Exception();
-			}
 
 			return script;
 		}

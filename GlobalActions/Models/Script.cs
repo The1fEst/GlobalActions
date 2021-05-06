@@ -49,6 +49,7 @@ namespace GlobalActions.Models {
 
 		private void Remove() {
 			ScriptsList.Instance.Remove(Name);
+			RemoveFile();
 		}
 
 		private void ChangeHotKey() {
@@ -96,6 +97,19 @@ namespace GlobalActions.Models {
 			var data = this.Serialize(); // _vm.ToSave().Serialize();
 
 			File.WriteAllBytes(filePath, data);
+		}
+
+		public void RemoveFile() {
+			if (!Directory.Exists(ScriptsDirectory)) {
+				return;
+			}
+
+			var filePath = Path.Combine(ScriptsDirectory, Name);
+			if (!File.Exists(filePath)) {
+				return;
+			}
+
+			File.Delete(filePath);
 		}
 
 		public void Toggle() {
