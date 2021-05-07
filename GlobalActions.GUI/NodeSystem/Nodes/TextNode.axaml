@@ -8,28 +8,24 @@
         <nodes:TextNodeViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="*,*,*,*">
+    <StackPanel Spacing="10">
 
-        <TextBlock Grid.Row="0"
-                   TextAlignment="Center">
+        <TextBlock TextAlignment="Center">
             Text
         </TextBlock>
 
-        <c:NamedField Grid.Row="1"
-                      LabelWidth="100"
+        <c:NamedField LabelWidth="100"
                       Label="Delay before">
             <TextBox Text="{Binding DelayBefore}" />
         </c:NamedField>
 
-        <c:NamedField Grid.Row="2"
-                      Label="Delay after">
+        <c:NamedField Label="Delay after">
             <TextBox Text="{Binding DelayAfter}" />
         </c:NamedField>
 
-        <c:NamedField Grid.Row="3"
-                      Label="Text">
+        <c:NamedField Label="Text">
             <TextBox Text="{Binding Text}" />
         </c:NamedField>
 
-    </Grid>
+    </StackPanel>
 </UserControl>

@@ -37,6 +37,11 @@
             <TextBox Text="{Binding Vertical}" />
         </c:NamedField>
 
+        <c:NamedField Label="Press left Alt+Z to capture pos">
+        <Button Content="Get mouse position"
+                Click="GetMousePosition" />
+        </c:NamedField>
+
     </StackPanel>
 
 </UserControl>

@@ -8,7 +8,7 @@
         <nodes:RepeatNodeViewModel />
     </Design.DataContext>
 
-    <StackPanel>
+    <StackPanel Spacing="10">
 
         <TextBlock TextAlignment="Center">
             Repeat

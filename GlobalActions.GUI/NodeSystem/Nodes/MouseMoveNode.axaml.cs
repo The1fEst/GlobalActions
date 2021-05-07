@@ -1,10 +1,17 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using GlobalActions.Models;
 using GlobalActions.Models.Actions;
+using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.GUI.NodeSystem.Nodes {
   public class MouseMoveNode : UserControl, INode {
     private readonly MouseMoveNodeViewModel _vm;
+
+    private bool _waitingToPos;
 
     public MouseMoveNode() {
       DataContext = _vm = new MouseMoveNodeViewModel();
@@ -39,6 +46,29 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
     private void InitializeComponent() {
       AvaloniaXamlLoader.Load(this);
+    }
+
+    private void GetMousePosition(object? sender, RoutedEventArgs e) {
+      if (_waitingToPos) {
+        return;
+      }
+
+      _waitingToPos = true;
+      InterceptKeys.KeyDown += GetMousePositionInternal;
+    }
+
+    private void GetMousePositionInternal(int key) {
+      if (key != (int) Keys.Z || GetAsyncKeyState((int) Keys.LMenu) == 0) {
+        return;
+      }
+
+      GetCursorPos(out var point);
+
+      _vm.Horizontal = point.x;
+      _vm.Vertical = point.y;
+
+      InterceptKeys.KeyDown -= GetMousePositionInternal;
+      _waitingToPos = false;
     }
   }
 }
