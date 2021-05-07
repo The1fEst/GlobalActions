@@ -18,7 +18,7 @@ namespace GlobalActions.Models.Actions {
       Task.Run(async () => {
         await Application.Current.Clipboard.SetTextAsync(Text);
 
-        const byte ctrl = (byte) Keys.LControlKey;
+        const byte ctrl = (byte) Keys.LCtrl;
         const byte v = (byte) Keys.V;
 
         Win32Interop.keybd_event(ctrl, ctrl, 0, 0);

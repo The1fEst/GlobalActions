@@ -58,7 +58,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
     }
 
     private void GetMousePositionInternal(int key) {
-      if (key != (int) Keys.Z || GetAsyncKeyState((int) Keys.LMenu) == 0) {
+      if (key != (int) Keys.Z || GetAsyncKeyState((int) Keys.LAlt) == 0) {
         return;
       }
 

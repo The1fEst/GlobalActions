@@ -468,52 +468,52 @@ namespace GlobalActions.Models {
     /// <summary>
     ///   The 0 key on the numeric keypad.
     /// </summary>
-    NumPad0 = 0x60,
+    N0 = 0x60,
 
     /// <summary>
     ///   The 1 key on the numeric keypad.
     /// </summary>
-    NumPad1 = 0x61,
+    N1 = 0x61,
 
     /// <summary>
     ///   The 2 key on the numeric keypad.
     /// </summary>
-    NumPad2 = 0x62,
+    N2 = 0x62,
 
     /// <summary>
     ///   The 3 key on the numeric keypad.
     /// </summary>
-    NumPad3 = 0x63,
+    N3 = 0x63,
 
     /// <summary>
     ///   The 4 key on the numeric keypad.
     /// </summary>
-    NumPad4 = 0x64,
+    N4 = 0x64,
 
     /// <summary>
     ///   The 5 key on the numeric keypad.
     /// </summary>
-    NumPad5 = 0x65,
+    N5 = 0x65,
 
     /// <summary>
     ///   The 6 key on the numeric keypad.
     /// </summary>
-    NumPad6 = 0x66,
+    N6 = 0x66,
 
     /// <summary>
     ///   The 7 key on the numeric keypad.
     /// </summary>
-    NumPad7 = 0x67,
+    N7 = 0x67,
 
     /// <summary>
     ///   The 8 key on the numeric keypad.
     /// </summary>
-    NumPad8 = 0x68,
+    N8 = 0x68,
 
     /// <summary>
     ///   The 9 key on the numeric keypad.
     /// </summary>
-    NumPad9 = 0x69,
+    N9 = 0x69,
 
     /// <summary>
     ///   The Multiply key.
@@ -678,32 +678,32 @@ namespace GlobalActions.Models {
     /// <summary>
     ///   The left SHIFT key.
     /// </summary>
-    LShiftKey = 0xA0,
+    LShift = 0xA0,
 
     /// <summary>
     ///   The right SHIFT key.
     /// </summary>
-    RShiftKey = 0xA1,
+    RShift = 0xA1,
 
     /// <summary>
     ///   The left CTRL key.
     /// </summary>
-    LControlKey = 0xA2,
+    LCtrl = 0xA2,
 
     /// <summary>
     ///   The right CTRL key.
     /// </summary>
-    RControlKey = 0xA3,
+    RCtrl = 0xA3,
 
     /// <summary>
     ///   The left ALT key.
     /// </summary>
-    LMenu = 0xA4,
+    LAlt = 0xA4,
 
     /// <summary>
     ///   The right ALT key.
     /// </summary>
-    RMenu = 0xA5,
+    RAlt = 0xA5,
 
     /// <summary>
     ///   The Browser Back key.
