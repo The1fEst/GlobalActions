@@ -56,7 +56,8 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
       InterceptKeys.KeyDown += key => {
         if (key == (int) Keys.Delete) {
-          _vm.Key = Keys.None.ToString();
+          _vm.Keys = new AvaloniaList<byte>();
+          _vm.SetKeys();
           return;
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using static GlobalActions.Win32Interop;
 
@@ -17,17 +18,18 @@ namespace GlobalActions.Models.Actions {
     public void RunAction() {
       Thread.Sleep(DelayBefore);
 
-      foreach (var key in Keys) {
+      var scans = Keys.Select(x => (ushort) MapVirtualKeyA(x, 0));
+
+      foreach (var key in scans) {
         switch (InputType) {
           case InputType.Down:
-            keybd_event(key, 0, 0, 0);
+            key_down(key);
             break;
           case InputType.Up:
-            keybd_event(key, 0, KEYEVENTF.KEYEVENTF_KEYUP, 0);
+            key_up(key);
             break;
           case InputType.Press:
-            keybd_event(key, 0, 0, 0);
-            keybd_event(key, 0, KEYEVENTF.KEYEVENTF_KEYUP, 0);
+            key_press(key);
             break;
           default:
             throw new ArgumentOutOfRangeException();
