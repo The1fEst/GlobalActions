@@ -29,8 +29,8 @@ namespace GlobalActions.GUI.NodeSystem {
     }
 
     private void AppendNode(object? sender, RoutedEventArgs e) {
-      if (_vm.SelectedNode != null) {
-        _vm.Nodes.Add((INode) _vm.SelectedNode.Clone());
+      if (_vm.PreparedNode != null) {
+        _vm.Nodes.Add((INode) _vm.PreparedNode.Clone());
       }
     }
 
@@ -38,7 +38,12 @@ namespace GlobalActions.GUI.NodeSystem {
       _vm.Mode = script.Mode;
       _vm.HotKey = script.HotKey;
       _vm.Name = script.Name;
-      _vm.Nodes = new AvaloniaList<INode>(script.ActionPipe.Select(x => x.FromAction()));
+
+      _vm.Nodes.Clear();
+
+      foreach (var node in script.ActionPipe.Select(x => x.FromAction())) {
+        _vm.Nodes.Add(node);
+      }
 
       _vm.SetKeys();
     }

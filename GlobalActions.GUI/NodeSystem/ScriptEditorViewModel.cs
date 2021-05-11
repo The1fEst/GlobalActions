@@ -17,7 +17,7 @@ namespace GlobalActions.GUI.NodeSystem {
 
     private AvaloniaList<INode> _nodes = new();
 
-    private INode? _selectedNode;
+    private INode? _preparedNode;
 
     public string Name {
       get => _name;
@@ -54,17 +54,25 @@ namespace GlobalActions.GUI.NodeSystem {
       }
     }
 
+    public INode? PreparedNode {
+      get => _preparedNode;
+      set => this.RaiseAndSetIfChanged(ref _preparedNode, value);
+    }
+
+    private INode? _selectedNode;
+
     public INode? SelectedNode {
       get => _selectedNode;
       set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
     }
 
-    public AvaloniaList<INode> Nodes {
-      get => _nodes;
-      set => this.RaiseAndSetIfChanged(ref _nodes, value);
-    }
+    public AvaloniaList<INode> Nodes { get; } = new();
 
     public bool IsActive { get; set; }
+
+    public void Remove(INode node) {
+      Nodes.Remove(node);
+    }
 
     public void SetKeys() {
       Keys = string.Empty;

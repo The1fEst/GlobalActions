@@ -44,7 +44,7 @@
                          Classes="MainListBox"
                          VirtualizationMode="None"
                          Items="{Binding AvailableNodes}"
-                         SelectedItem="{Binding SelectedNode}" />
+                         SelectedItem="{Binding PreparedNode}" />
 
                 <Button Grid.Row="1"
                         Content="Append selected node"
@@ -52,9 +52,23 @@
 
             </Grid>
 
-            <ListBox Grid.Column="1"
-                     Classes="MainListBox"
-                     Items="{Binding Nodes}" />
+            <Grid Grid.Column="1"
+                  RowDefinitions="*,50">
+
+                <ListBox Grid.Row="0"
+                         Name="ScriptNodes"
+                         Classes="MainListBox"
+                         VirtualizationMode="None"
+                         Items="{Binding Nodes}"
+                         SelectedItem="{Binding SelectedNode}">
+                </ListBox>
+
+                <Button Grid.Row="1"
+                        Content="Remove"
+                        Command="{Binding Path=Remove}"
+                        CommandParameter="{Binding SelectedNode}" />
+
+            </Grid>
 
         </Grid>
 
