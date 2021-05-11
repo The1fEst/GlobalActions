@@ -1,12 +1,33 @@
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace GlobalActions {
   public static class Win32Interop {
     public delegate IntPtr LowLevelKeyboardProc(
       int nCode, IntPtr wParam, IntPtr lParam);
+
+    [Flags]
+    public enum InputType {
+      Mouse = 0,
+
+      Keyboard = 1,
+
+      Hardware = 2,
+    }
+
+    [Flags]
+    public enum KeyEventF {
+      KeyDown = 0x0000,
+
+      ExtendedKey = 0x0001,
+
+      KeyUp = 0x0002,
+
+      Unicode = 0x0004,
+
+      Scancode = 0x0008,
+    }
 
     [Flags]
     public enum KEYEVENTF : uint {
@@ -17,6 +38,37 @@ namespace GlobalActions {
       KEYEVENTF_UNICODE = 4,
 
       KEYEVENTF_SCANCODE = 8,
+    }
+
+    [Flags]
+    public enum MouseEventF {
+      Absolute = 0x8000,
+
+      HWheel = 0x01000,
+
+      Move = 0x0001,
+
+      MoveNoCoalesce = 0x2000,
+
+      LeftDown = 0x0002,
+
+      LeftUp = 0x0004,
+
+      RightDown = 0x0008,
+
+      RightUp = 0x0010,
+
+      MiddleDown = 0x0020,
+
+      MiddleUp = 0x0040,
+
+      VirtualDesk = 0x4000,
+
+      Wheel = 0x0800,
+
+      XDown = 0x0080,
+
+      XUp = 0x0100,
     }
 
     [Flags]
@@ -186,15 +238,13 @@ namespace GlobalActions {
 
       WM_COMPACTING = 65, // 0x00000041
 
-      [Obsolete]
-      WM_COMMNOTIFY = 68, // 0x00000044
+      [Obsolete] WM_COMMNOTIFY = 68, // 0x00000044
 
       WM_WINDOWPOSCHANGING = 70, // 0x00000046
 
       WM_WINDOWPOSCHANGED = 71, // 0x00000047
 
-      [Obsolete]
-      WM_POWER = 72, // 0x00000048
+      [Obsolete] WM_POWER = 72, // 0x00000048
 
       WM_COPYDATA = 74, // 0x0000004A
 
@@ -610,15 +660,12 @@ namespace GlobalActions {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetMessage(
       out MSG lpMsg,
-      [In]
-      IntPtr hWnd,
+      [In] IntPtr hWnd,
       uint wMsgFilterMin,
       uint wMsgFilterMax);
 
     [DllImport("user32.dll")]
-    public static extern IntPtr FindWindow([In]
-                                           string lpClassName, [In]
-                                           string lpWindowName);
+    public static extern IntPtr FindWindow([In] string lpClassName, [In] string lpWindowName);
 
     [DllImport("user32.dll")]
     public static extern IntPtr GetForegroundWindow();
@@ -639,20 +686,16 @@ namespace GlobalActions {
       uint dwExtraInfo);
 
     [DllImport("user32.dll")]
-    public static extern int GetWindowLong([In]
-                                           IntPtr hWnd, int nIndex);
+    public static extern int GetWindowLong([In] IntPtr hWnd, int nIndex);
 
     [DllImport("user32.dll")]
-    public static extern int SetWindowLong([In]
-                                           IntPtr hWnd, int nIndex, int dwNewLong);
+    public static extern int SetWindowLong([In] IntPtr hWnd, int nIndex, int dwNewLong);
 
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetWindowPos(
-      [In]
-      IntPtr hWnd,
-      [In]
-      IntPtr hWndInsertAfter,
+      [In] IntPtr hWnd,
+      [In] IntPtr hWndInsertAfter,
       int X,
       int Y,
       int cx,
@@ -690,6 +733,36 @@ namespace GlobalActions {
 
     [DllImport("user32.dll")]
     public static extern uint MapVirtualKeyA(uint uCode, uint uMapType);
+
+    private static void key_event(params (ushort key, bool isDown)[] inputParams) {
+      var inputs = inputParams.Select(x => new Input {
+        type = (int) InputType.Keyboard,
+        u = new InputUnion {
+          ki = new KeyboardInput {
+            wVk = 0,
+            wScan = x.key,
+            dwFlags = x.isDown
+              ? (uint) (KeyEventF.KeyDown | KeyEventF.Scancode)
+              : (uint) (KeyEventF.KeyUp | KeyEventF.Scancode),
+            dwExtraInfo = GetMessageExtraInfo(),
+          },
+        },
+      }).ToArray();
+
+      SendInput((uint) inputs.Length, inputs, Marshal.SizeOf(typeof(Input)));
+    }
+
+    public static void key_down(ushort kbdScan) {
+      key_event((kbdScan, true));
+    }
+
+    public static void key_up(ushort kbdScan) {
+      key_event((kbdScan, false));
+    }
+
+    public static void key_press(ushort kbdScan) {
+      key_event((kbdScan, true), (kbdScan, false));
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct KeyboardInput {
@@ -730,97 +803,15 @@ namespace GlobalActions {
 
     [StructLayout(LayoutKind.Explicit)]
     public struct InputUnion {
-      [FieldOffset(0)]
-      public MouseInput mi;
-      [FieldOffset(0)]
-      public KeyboardInput ki;
-      [FieldOffset(0)]
-      public HardwareInput hi;
+      [FieldOffset(0)] public MouseInput mi;
+      [FieldOffset(0)] public KeyboardInput ki;
+      [FieldOffset(0)] public HardwareInput hi;
     }
 
     public struct Input {
       public int type;
 
       public InputUnion u;
-    }
-
-    [Flags]
-    public enum InputType {
-      Mouse = 0,
-
-      Keyboard = 1,
-
-      Hardware = 2
-    }
-
-    [Flags]
-    public enum KeyEventF {
-      KeyDown = 0x0000,
-
-      ExtendedKey = 0x0001,
-
-      KeyUp = 0x0002,
-
-      Unicode = 0x0004,
-
-      Scancode = 0x0008
-    }
-
-    [Flags]
-    public enum MouseEventF {
-      Absolute = 0x8000,
-
-      HWheel = 0x01000,
-
-      Move = 0x0001,
-
-      MoveNoCoalesce = 0x2000,
-
-      LeftDown = 0x0002,
-
-      LeftUp = 0x0004,
-
-      RightDown = 0x0008,
-
-      RightUp = 0x0010,
-
-      MiddleDown = 0x0020,
-
-      MiddleUp = 0x0040,
-
-      VirtualDesk = 0x4000,
-
-      Wheel = 0x0800,
-
-      XDown = 0x0080,
-
-      XUp = 0x0100
-    }
-
-    private static void key_event(params (ushort key, bool isDown)[] inputParams) {
-      var inputs = inputParams.Select(x => new Input {
-        type = (int) InputType.Keyboard,
-        u = new InputUnion {
-          ki = new KeyboardInput {
-            wVk = 0,
-            wScan = x.key,
-            dwFlags = x.isDown
-              ? (uint) (KeyEventF.KeyDown | KeyEventF.Scancode)
-              : (uint) (KeyEventF.KeyUp | KeyEventF.Scancode),
-            dwExtraInfo = GetMessageExtraInfo(),
-          },
-        },
-      }).ToArray();
-
-      SendInput((uint) inputs.Length, inputs, Marshal.SizeOf(typeof(Input)));
-    }
-
-    public static void key_down(ushort kbdScan) => key_event((kbdScan, true));
-
-    public static void key_up(ushort kbdScan) => key_event((kbdScan, false));
-
-    public static void key_press(ushort kbdScan) {
-      key_event((kbdScan, true), (kbdScan, false));
     }
 
     public struct POINT {

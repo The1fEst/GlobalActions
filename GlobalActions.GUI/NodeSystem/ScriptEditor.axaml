@@ -10,25 +10,41 @@
         <v:ScriptEditorViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="50,*">
+    <Grid RowDefinitions="50,*"
+          IsEnabled="{Binding IsEnabled}">
 
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
-                    Spacing="30">
+                    Spacing="15">
+
+            <Panel VerticalAlignment="Center">
+                <TextBlock Text="Name:" />
+            </Panel>
 
             <TextBox Text="{Binding Name}"
                      Height="30"
                      Width="150" />
+
+            <Panel VerticalAlignment="Center">
+                <TextBlock Text="Trigger:" />
+            </Panel>
+
             <TextBox Text="{Binding Keys, Mode=OneWay}"
                      Height="30"
                      IsReadOnly="True"
                      GotFocus="OnGotFocus"
                      LostFocus="OnLostFocus"
-                     Width="350" />
+                     Width="200" />
+
+            <Panel VerticalAlignment="Center">
+                <TextBlock Text="Trigger mode:" />
+            </Panel>
+
             <ComboBox Items="{Binding AvailableModes}"
                       SelectedItem="{Binding Mode}"
                       Width="150" />
+
             <Button Click="Save"
                     Content="Save" />
 

@@ -19,14 +19,19 @@ namespace GlobalActions.GUI {
       if (Toggle()) {
         Task.Run(() => {
           _hookId = SetHook(Proc);
-          while (GetMessage(out _, IntPtr.Zero, 0, 0)) { }
+          while (GetMessage(out _, IntPtr.Zero, 0, 0)) {
+          }
         });
       }
     }
 
     public static void Stop() {
       if (!Toggle()) {
-        UnhookWindowsHookEx(_hookId);
+        try {
+          UnhookWindowsHookEx(_hookId);
+        } catch {
+          // ignored
+        }
       }
     }
 

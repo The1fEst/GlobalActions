@@ -9,6 +9,8 @@ namespace GlobalActions.GUI.NodeSystem {
   public class ScriptEditorViewModel : ReactiveObject {
     private HotKey _hotKey = new();
 
+    private bool _isEnabled;
+
     private string _keys = "";
 
     private ScriptMode _mode;
@@ -19,9 +21,17 @@ namespace GlobalActions.GUI.NodeSystem {
 
     private INode? _preparedNode;
 
+    public bool IsEnabled {
+      get => _isEnabled;
+      set => this.RaiseAndSetIfChanged(ref _isEnabled, value);
+    }
+
     public string Name {
       get => _name;
-      set => this.RaiseAndSetIfChanged(ref _name, value);
+      set {
+        this.RaiseAndSetIfChanged(ref _name, value);
+        IsEnabled = !string.IsNullOrEmpty(value);
+      }
     }
 
     public AvaloniaList<ScriptMode> AvailableModes =>
@@ -39,7 +49,6 @@ namespace GlobalActions.GUI.NodeSystem {
 
     public HotKey HotKey {
       get => _hotKey;
-
       set => this.RaiseAndSetIfChanged(ref _hotKey, value);
     }
 
@@ -75,7 +84,7 @@ namespace GlobalActions.GUI.NodeSystem {
     }
 
     public void SetKeys() {
-      Keys = string.Empty;
+      Keys = Models.Keys.None.ToString();
 
       if (HotKey.Modifiers.Any()) {
         Keys = string.Join('+', HotKey.Modifiers.Select(x => (Keys) x)) + "+";

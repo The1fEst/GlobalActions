@@ -12,7 +12,8 @@ namespace GlobalActions {
 
     public Script? SelectedScript;
 
-    private ScriptsList() { }
+    private ScriptsList() {
+    }
 
     public static ScriptsList Instance => _instance ??= new ScriptsList();
 
