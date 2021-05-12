@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using GlobalActions.GUI.ViewModels;
+using ReactiveUI;
 
 namespace GlobalActions.GUI {
   public class ViewLocator : IDataTemplate {
@@ -19,7 +19,7 @@ namespace GlobalActions.GUI {
     }
 
     public bool Match(object data) {
-      return data is ViewModelBase;
+      return data is ReactiveObject;
     }
   }
 }

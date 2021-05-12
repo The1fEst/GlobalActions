@@ -9,24 +9,24 @@ namespace GlobalActions.Models {
         case MouseButton.None:
           break;
         case MouseButton.Left:
-          MouseEventDown = MOUSEEVENTF.MOUSEEVENTF_LEFTDOWN;
-          MouseEventUp = MOUSEEVENTF.MOUSEEVENTF_LEFTUP;
+          MouseEventDown = MouseEventF.LeftDown;
+          MouseEventUp = MouseEventF.LeftUp;
           break;
         case MouseButton.Right:
-          MouseEventDown = MOUSEEVENTF.MOUSEEVENTF_RIGHTDOWN;
-          MouseEventUp = MOUSEEVENTF.MOUSEEVENTF_RIGHTUP;
+          MouseEventDown = MouseEventF.RightDown;
+          MouseEventUp = MouseEventF.RightUp;
           break;
         case MouseButton.Middle:
-          MouseEventDown = MOUSEEVENTF.MOUSEEVENTF_MIDDLEDOWN;
-          MouseEventUp = MOUSEEVENTF.MOUSEEVENTF_MIDDLEUP;
+          MouseEventDown = MouseEventF.MiddleDown;
+          MouseEventUp = MouseEventF.MiddleUp;
           break;
         default:
           throw new ArgumentOutOfRangeException(nameof(mouseButton), mouseButton, null);
       }
     }
 
-    public MOUSEEVENTF MouseEventDown { get; set; }
+    public MouseEventF MouseEventDown { get; set; }
 
-    public MOUSEEVENTF MouseEventUp { get; set; }
+    public MouseEventF MouseEventUp { get; set; }
   }
 }

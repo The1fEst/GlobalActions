@@ -57,11 +57,4 @@
     <ItemGroup>
       <ProjectReference Include="..\GlobalActions\GlobalActions.csproj" />
     </ItemGroup>
-    <Target Name="FormatCode" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-        <Exec Command="dotnet format $(SolutionPath)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-        </Exec>
-        <Error Condition="'$(ErrorCode)' != '0'" Text="install dotnet-format: dotnet tool install -g dotnet-format" />
-        <Message Importance="high" Text="Formating code. This may take several minutes..." />
-    </Target>
 </Project>

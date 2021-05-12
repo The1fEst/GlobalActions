@@ -12,6 +12,7 @@
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaChromeHints="PreferSystemChrome"
+        ExtendClientAreaTitleBarHeightHint="999"
         ExtendClientAreaToDecorationsHint="True">
 
     <Window.Styles>

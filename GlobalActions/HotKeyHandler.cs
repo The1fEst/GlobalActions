@@ -12,7 +12,7 @@ namespace GlobalActions {
       return HotKeys.FirstOrDefault(x => x.Key == key && x.ModifiersIsDown());
     }
 
-    public static void TryRunAction(HotKeyState hotKey, WM keyState) {
+    public static void TryRunAction(HotKeyState hotKey, Wm keyState) {
       if (hotKey.GetKeyState(keyState) == KeyStates.Down) {
         hotKey.Action();
       }

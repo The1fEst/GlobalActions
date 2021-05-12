@@ -62,8 +62,8 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
 
       GetCursorPos(out var point);
 
-      _vm.Horizontal = point.x;
-      _vm.Vertical = point.y;
+      _vm.Horizontal = point.X;
+      _vm.Vertical = point.Y;
 
       InterceptKeys.KeyDown -= GetMousePositionInternal;
       _waitingToPos = false;

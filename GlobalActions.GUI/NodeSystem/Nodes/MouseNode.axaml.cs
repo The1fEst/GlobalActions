@@ -16,6 +16,7 @@ namespace GlobalActions.GUI.NodeSystem.Nodes {
         DelayAfter = vm.DelayAfter,
         DelayBefore = vm.DelayBefore,
         Key = vm.Key,
+        InputType = vm.InputType,
       };
 
       InitializeComponent();

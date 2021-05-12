@@ -40,7 +40,7 @@ namespace GlobalActions.GUI {
     }
 
     private static IntPtr SetHook(LowLevelKeyboardProc proc) {
-      return SetWindowsHookEx(WH_KEYBOARD_LL, proc, IntPtr.Zero, 0);
+      return SetWindowsHookEx(WhKeyboardLl, proc, IntPtr.Zero, 0);
     }
 
     private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
@@ -49,9 +49,9 @@ namespace GlobalActions.GUI {
       }
 
       var vkCode = Marshal.ReadInt32(lParam);
-      var wmParam = (WM) wParam;
-      var isDown = wmParam is WM.WM_KEYDOWN or WM.WM_SYSKEYDOWN;
-      var isUp = wmParam is WM.WM_KEYUP or WM.WM_SYSKEYUP;
+      var wmParam = (Wm) wParam;
+      var isDown = wmParam is Wm.Keydown or Wm.SysKeyDown;
+      var isUp = wmParam is Wm.Keyup or Wm.SysKeyUp;
 
       if (isDown || isUp) {
         var hotKey = HotKeyHandler.HasKey(vkCode);

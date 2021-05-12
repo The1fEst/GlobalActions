@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
+using static GlobalActions.Win32Interop;
 
 namespace GlobalActions.Models.Actions {
   [Serializable]
@@ -18,13 +19,18 @@ namespace GlobalActions.Models.Actions {
       Task.Run(async () => {
         await Application.Current.Clipboard.SetTextAsync(Text);
 
-        const byte ctrl = (byte) Keys.LCtrl;
-        const byte v = (byte) Keys.V;
+        const ushort ctrl = (ushort) Keys.LCtrl;
+        const ushort v = (ushort) Keys.LCtrl;
 
-        Win32Interop.keybd_event(ctrl, ctrl, 0, 0);
-        Win32Interop.keybd_event(v, v, 0, 0);
-        Win32Interop.keybd_event(v, v, Win32Interop.KEYEVENTF.KEYEVENTF_KEYUP, 0);
-        Win32Interop.keybd_event(ctrl, ctrl, Win32Interop.KEYEVENTF.KEYEVENTF_KEYUP, 0);
+        key_down(ctrl);
+
+        await Task.Delay(10);
+
+        key_press(v);
+
+        await Task.Delay(10);
+
+        key_up(ctrl);
       });
 
       Thread.Sleep(DelayAfter);

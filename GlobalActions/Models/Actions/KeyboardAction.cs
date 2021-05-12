@@ -18,9 +18,7 @@ namespace GlobalActions.Models.Actions {
     public void RunAction() {
       Thread.Sleep(DelayBefore);
 
-      var scans = Keys.Select(x => (ushort) MapVirtualKeyA(x, 0));
-
-      foreach (var key in scans) {
+      foreach (var key in Keys) {
         switch (InputType) {
           case InputType.Down:
             key_down(key);

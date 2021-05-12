@@ -21,6 +21,8 @@ namespace GlobalActions.GUI.NodeSystem {
 
     private INode? _preparedNode;
 
+    private INode? _selectedNode;
+
     public bool IsEnabled {
       get => _isEnabled;
       set => this.RaiseAndSetIfChanged(ref _isEnabled, value);
@@ -28,6 +30,7 @@ namespace GlobalActions.GUI.NodeSystem {
 
     public string Name {
       get => _name;
+
       set {
         this.RaiseAndSetIfChanged(ref _name, value);
         IsEnabled = !string.IsNullOrEmpty(value);
@@ -68,8 +71,6 @@ namespace GlobalActions.GUI.NodeSystem {
       set => this.RaiseAndSetIfChanged(ref _preparedNode, value);
     }
 
-    private INode? _selectedNode;
-
     public INode? SelectedNode {
       get => _selectedNode;
       set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
@@ -84,7 +85,7 @@ namespace GlobalActions.GUI.NodeSystem {
     }
 
     public void SetKeys() {
-      Keys = Models.Keys.None.ToString();
+      Keys = string.Empty;
 
       if (HotKey.Modifiers.Any()) {
         Keys = string.Join('+', HotKey.Modifiers.Select(x => (Keys) x)) + "+";
@@ -92,6 +93,8 @@ namespace GlobalActions.GUI.NodeSystem {
 
       if (HotKey.Key != 0) {
         Keys += (Keys) HotKey.Key;
+      } else {
+        Keys = Models.Keys.None.ToString();
       }
     }
   }

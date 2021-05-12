@@ -28,10 +28,10 @@ namespace GlobalActions.Models {
           .All(x => !x);
     }
 
-    public KeyStates GetKeyState(WM state) {
-      var down = !State && state == WM.WM_KEYDOWN;
-      var hold = State && state == WM.WM_KEYDOWN;
-      var release = State && state == WM.WM_KEYUP;
+    public KeyStates GetKeyState(Wm state) {
+      var down = !State && state == Wm.Keydown;
+      var hold = State && state == Wm.Keydown;
+      var release = State && state == Wm.Keyup;
 
       var modifiersIsDown = ModifiersIsDown();
 

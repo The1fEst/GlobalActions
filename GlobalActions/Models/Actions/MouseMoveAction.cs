@@ -16,15 +16,15 @@ namespace GlobalActions.Models.Actions {
     public void RunAction() {
       Thread.Sleep(DelayBefore);
 
-      var basePoint = new POINT();
+      var basePoint = new Point();
       if (MouseMoveType == Models.MouseMoveType.Relative) {
         GetCursorPos(out basePoint);
       }
 
-      basePoint.x += Horizontal;
-      basePoint.y += Vertical;
+      basePoint.X += Horizontal;
+      basePoint.Y += Vertical;
 
-      SetCursorPos(basePoint.x, basePoint.y);
+      SetCursorPos(basePoint.X, basePoint.Y);
 
       Thread.Sleep(DelayAfter);
     }
