@@ -10,18 +10,14 @@ using GlobalActions.Models;
 
 namespace GlobalActions.GUI.NodeSystem {
   public class ScriptEditor : UserControl {
-    private static ScriptEditor? _instance;
-
     private readonly ScriptEditorViewModel _vm;
 
     public ScriptEditor() {
       DataContext = _vm = new ScriptEditorViewModel();
       InitializeComponent();
 
-      _instance ??= this;
+      ComponentsStore.Add(this);
     }
-
-    public static ScriptEditor Instance => _instance ??= new ScriptEditor();
 
     private void InitializeComponent() {
       AvaloniaXamlLoader.Load(this);
@@ -33,7 +29,13 @@ namespace GlobalActions.GUI.NodeSystem {
       }
     }
 
-    public void Load(Script script) {
+    public Script? Load(string scriptName) {
+      var script = ScriptsList.Instance.Scripts.FirstOrDefault(x => x.Name == scriptName);
+
+      if (script == null) {
+        return script;
+      }
+
       _vm.Mode = script.Mode;
       _vm.HotKey = script.HotKey;
       _vm.Name = script.Name;
@@ -44,6 +46,30 @@ namespace GlobalActions.GUI.NodeSystem {
         _vm.Nodes.Add(node);
       }
 
+      _vm.SetKeys();
+
+      return script;
+    }
+
+    public void Remove(string scriptName) {
+      var script = ScriptsList.Instance.Scripts.FirstOrDefault(x => x.Name == scriptName);
+
+      if (script == null) {
+        return;
+      }
+
+      script.RemoveFile();
+      ScriptsList.Instance.Remove(script.Name);
+
+      if (_vm.Name != script.Name) {
+        return;
+      }
+
+      _vm.Mode = ScriptMode.Single;
+      _vm.HotKey = new HotKey();
+      _vm.Name = string.Empty;
+
+      _vm.Nodes.Clear();
       _vm.SetKeys();
     }
 

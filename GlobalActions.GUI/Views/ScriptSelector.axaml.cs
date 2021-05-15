@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using GlobalActions.GUI.NodeSystem;
 
 namespace GlobalActions.GUI.Views {
   public class ScriptSelector : UserControl {
@@ -9,6 +10,8 @@ namespace GlobalActions.GUI.Views {
     public ScriptSelector() {
       DataContext = _vm = new ScriptSelectorViewModel();
       InitializeComponent();
+
+      ComponentsStore.Add(this);
     }
 
     private void InitializeComponent() {
@@ -22,6 +25,9 @@ namespace GlobalActions.GUI.Views {
       }
 
       ScriptsList.Instance.Add(_vm.Name);
+
+      var editor = ComponentsStore.Get<ScriptEditor>();
+      editor?.Load(_vm.Name);
     }
   }
 }

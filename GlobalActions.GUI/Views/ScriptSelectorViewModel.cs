@@ -1,4 +1,3 @@
-using System.Linq;
 using Avalonia.Collections;
 using GlobalActions.GUI.NodeSystem;
 using GlobalActions.Models;
@@ -24,11 +23,17 @@ namespace GlobalActions.GUI.Views {
     }
 
     public void Load(string name) {
-      SelectedScript = ScriptsList.Instance.Scripts.FirstOrDefault(script => script.Name == name);
+      var editor = ComponentsStore.Get<ScriptEditor>();
+      SelectedScript = editor?.Load(name);
+    }
 
-      if (SelectedScript != null) {
-        ScriptEditor.Instance.Load(SelectedScript);
+    public void Remove(string name) {
+      if (SelectedScript?.Name == name) {
+        SelectedScript = null;
       }
+
+      var editor = ComponentsStore.Get<ScriptEditor>();
+      editor?.Remove(name);
     }
   }
 }

@@ -63,7 +63,8 @@ namespace GlobalActions {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetMessage(
       out Msg lpMsg,
-      [In] IntPtr hWnd,
+      [In]
+      IntPtr hWnd,
       uint wMsgFilterMin,
       uint wMsgFilterMax);
 
@@ -74,76 +75,6 @@ namespace GlobalActions {
       uint dy,
       uint dwData,
       uint dwExtraInfo);
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct KeyboardInput {
-      public ushort wVk;
-
-      public ushort wScan;
-
-      public uint dwFlags;
-
-      public uint time;
-
-      public IntPtr dwExtraInfo;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    public struct InputUnion {
-      [FieldOffset(0)] public MouseInput mi;
-      [FieldOffset(0)] public KeyboardInput ki;
-      [FieldOffset(0)] public HardwareInput hi;
-    }
-
-    public struct Input {
-      public int Type;
-
-      public InputUnion U;
-    }
-
-    public struct Point {
-      public int X;
-
-      public int Y;
-    }
-
-    public struct Msg {
-      public IntPtr Hwnd;
-
-      public Wm Message;
-
-      public uint WParam;
-
-      public int LParam;
-
-      public uint Time;
-
-      public Point Pt;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MouseInput {
-      public int dx;
-
-      public int dy;
-
-      public uint mouseData;
-
-      public uint dwFlags;
-
-      public uint time;
-
-      public IntPtr dwExtraInfo;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct HardwareInput {
-      public uint uMsg;
-
-      public ushort wParamL;
-
-      public ushort wParamH;
-    }
 
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -205,6 +136,79 @@ namespace GlobalActions {
 
     public static void key_press(ushort key) {
       key_event((key, true), (key, false));
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KeyboardInput {
+      public ushort wVk;
+
+      public ushort wScan;
+
+      public uint dwFlags;
+
+      public uint time;
+
+      public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct InputUnion {
+      [FieldOffset(0)]
+      public MouseInput mi;
+      [FieldOffset(0)]
+      public KeyboardInput ki;
+      [FieldOffset(0)]
+      public HardwareInput hi;
+    }
+
+    public struct Input {
+      public int Type;
+
+      public InputUnion U;
+    }
+
+    public struct Point {
+      public int X;
+
+      public int Y;
+    }
+
+    public struct Msg {
+      public IntPtr Hwnd;
+
+      public Wm Message;
+
+      public uint WParam;
+
+      public int LParam;
+
+      public uint Time;
+
+      public Point Pt;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseInput {
+      public int dx;
+
+      public int dy;
+
+      public uint mouseData;
+
+      public uint dwFlags;
+
+      public uint time;
+
+      public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HardwareInput {
+      public uint uMsg;
+
+      public ushort wParamL;
+
+      public ushort wParamH;
     }
   }
 }

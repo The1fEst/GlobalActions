@@ -18,6 +18,7 @@ indent_brace_style = K&R
 curly_bracket_next_line = false
 
 [*.cs]
+indent_style = space
 indent_size = 2
 tab_width = 2
 resharper_arrange_trailing_comma_in_multiline_lists_highlighting = warning

@@ -60,7 +60,8 @@
                             <Button Grid.Row="1"
                                     Grid.Column="1"
                                     Content="Remove"
-                                    Command="{Binding Remove}" />
+                                    Command="{Binding ElementName=ScriptList, Path=DataContext.Remove}"
+                                    CommandParameter="{Binding Name}" />
 
                         </Grid>
                     </DataTemplate>
